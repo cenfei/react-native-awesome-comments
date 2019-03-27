@@ -3,7 +3,7 @@
 
 
 ```
-import { Comments } from 'react-native-comments'
+import { Comments } from 'react-native-awesome-comments'
 
   <Comments
     enabled={true}
