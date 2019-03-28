@@ -10,6 +10,5 @@ dist
 # Dependency directory
 node_modules
 
-react-native-awesome-comments-1.0.0.tgz
 
 .DS_Store
