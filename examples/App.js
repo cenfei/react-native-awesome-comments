@@ -7,11 +7,11 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, View, TextInput, Button } from 'react-native';
+import { StyleSheet, View, TextInput, Alert } from 'react-native';
 import * as _ from 'lodash';
 import moment from 'moment';
 
-import { Comments } from 'react-native-comments';
+import { Comments } from './src';
 
 const configRelTime_Posted = {
   relativeTime: {
@@ -152,7 +152,7 @@ export default class App extends Component {
       isFetchingComments: false,
       commentsHasNextPage: true,
 
-      isFetchingReplies: false,
+      fetchingRepliesParentId: null,
 
       pageSize: 5
     };
@@ -165,7 +165,9 @@ export default class App extends Component {
   }
 
   fetchCommentReplies = (parentId, page, jobId) => {
+    this.setState({ fetchingRepliesParentId: parentId })
     console.log(parentId, jobId, page)
+    setTimeout(() => { this.setState({ fetchingRepliesParentId: null }) }, 2000)
   }
 
   saveComment = (comment) => {
@@ -238,6 +240,9 @@ export default class App extends Component {
       })
     }
   }
+  onPressProfile = (userId) => {
+    Alert.alert(userId)
+  }
 
   render() {
     return (
@@ -257,7 +262,7 @@ export default class App extends Component {
           commentsHasNextPage={this.state.commentsHasNextPage}
 
           replies={this.state.replies}
-          isFetchingReplies={this.state.isFetchingReplies}
+          fetchingRepliesParentId={this.state.fetchingRepliesParentId}
 
           //Methods
           fetchComments={this.fetchComments}
@@ -265,6 +270,7 @@ export default class App extends Component {
           updateComment={this.updateComment}
           deleteComment={this.deleteComment}
           fetchCommentReplies={this.fetchCommentReplies}
+          onPressProfile={this.onPressProfile}
         />
 
       </View>
