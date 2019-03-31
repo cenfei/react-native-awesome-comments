@@ -13,11 +13,7 @@ class CommentCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            collapse: true,
-            isValidReply: false,
-            isValidEdit: false,
-            replyingComposerValue: '',
-            editingComposerValue: this.props.comment.message
+            isEditing: false
         };
     }
 

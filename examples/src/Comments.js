@@ -11,23 +11,17 @@ import * as _ from 'lodash';
 
 import Images from './images';
 import styles from "./styles";
-import CommentCard from './CommentCard';
+import ParentComment from './ParentComment';
+import Composer from './Composer';
 
 class Comments extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            editingCommentId: null,
-            replyingCommentId: null,
-
-            fetchingRepliesParentId: '',
-
-            parentComposerValue: '',
-        };
+        this.state = {};
     }
 
     componentWillMount() {
-        this.props.fetchComments(this.props.jobId, 1);
+        //this.props.fetchComments(this.props.jobId, 1);
     }
 
     saveComment = (text, parentId) => {
@@ -161,22 +155,19 @@ class Comments extends Component {
         }
     }
 
-    renderCommentsList = (comments) => {
+    renderComments = (comments) => {
         if (_.isEmpty(comments)) {
             return <View />
         } else {
             return comments.map((comment) => {
                 let replies = _.get(this.props.replies, `${comment.commentId}`, []);
                 return (
-                    <CommentCard
-                        enabled={this.props.enabled}
+                    <ParentComment
                         key={comment.commentId}
-                        jobId={this.props.jobId}
-
-                        isLoggedIn={this.props.isLoggedIn}
+                        enabled={this.props.enabled}
                         loggedInUser={this.props.user}
-
-                        editingCommentId={this.state.editingCommentId}
+                        comment={comment}
+                        replies={replies}
 
                         saveComment={this.saveComment}
                         deleteComment={this.deleteComment}
@@ -194,15 +185,11 @@ class Comments extends Component {
 
 
                         fetchingRepliesParentId={this.props.fetchingRepliesParentId}
-
-                        replies={replies}
-                        comment={comment}
                     />
                 )
             })
         }
     }
-
 
     render() {
         const comments = _.get(this.props.comments, `[${this.props.jobId}]`, []);
@@ -210,13 +197,16 @@ class Comments extends Component {
             <ScrollView style={styles.container} >
                 <Text style={styles.commentSectionTitle}>Comments</Text>
 
-                {this.renderComposer()}
-                {this.renderCommentsList(comments)}
+                {/* Render Composer */}
+                <Composer />
 
+                {/* Render comments */}
+                {this.renderComments(comments)}
+
+                {/* Render see more comments */}
                 {this.renderSeeMoreComments(comments)}
-                {this.props.commentPage === 1 && this.props.isFetchingComments &&
-                    <ActivityIndicator size="large" color={'#d3d3d3'} animating={true} />
-                }
+
+                {/* Fetch comments loader */}
 
             </ScrollView>
         )
