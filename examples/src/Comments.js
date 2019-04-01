@@ -2,17 +2,15 @@ import React, { Component } from "react";
 import {
     Text,
     View,
-    TextInput,
-    TouchableOpacity,
-    ActivityIndicator, ScrollView, Image,
+    ActivityIndicator, ScrollView,
     Alert
 } from 'react-native';
 import * as _ from 'lodash';
 
-import Images from './images';
 import styles from "./styles";
-import ParentComment from './ParentComment';
-import Composer from './Composer';
+import { ParentComment } from './ParentComment';
+import { Composer } from './Composer';
+import { SeeMoreComments } from './SeeMoreComments'
 
 class Comments extends Component {
     constructor(props) {
@@ -45,7 +43,6 @@ class Comments extends Component {
             comment.parentId = parentId
         }
         this.props.saveComment(comment)
-        this.setState({ parentComposerValue: '', replyingCommentId: null })
     }
 
     deleteComment = (comment) => {
@@ -65,94 +62,8 @@ class Comments extends Component {
 
     }
 
-    onPressReply = (commentId) => {
-        this.setState({ replyingCommentId: commentId, editingCommentId: null });
-    }
-
-    onPressShowReplies = (id) => {
-        this.setState({ fetchingRepliesParentId: id })
-    }
-
-    onPressEdit = (commentId) => {
-        this.setState({ editingCommentId: commentId, replyingCommentId: null });
-    }
-
-    onSubmitEdit = (comment) => {
-        this.props.updateComment(comment)
-        this.setState({ editingCommentId: null });
-    }
-
-    onPressCancelEdit = () => {
-        this.setState({ editingCommentId: null });
-    }
-
-    renderSeeMoreComments = (comments) => {
-        return (
-            <View style={styles.seeMoreCommentsContainer}>
-                {!_.isEmpty(comments) && (this.props.commentsHasNextPage) &&
-                    <TouchableOpacity
-                        style={styles.seeMoreCommentsBtn}
-                        onPress={() => this.props.fetchComments(this.props.jobId, this.props.commentPage + 1)}
-                        disabled={this.props.isFetchingComments}>
-                        <Text>See more comments</Text>
-                    </TouchableOpacity>
-                }
-
-                {this.props.isFetchingComments && this.props.commentPage !== 1 &&
-                    <ActivityIndicator style={styles.seeMoreCommentsLoader} size="small" color={'#d3d3d3'} animating={true} />
-                }
-            </View>
-        )
-    }
-
-    isValidParentComment = () => {
-        const text = this.state.parentComposerValue.trim()
-        if (_.isEmpty(text)) {
-            return false
-        } else {
-            return true
-        }
-    }
-
-    renderComposer = () => {
-        if (this.props.enabled) {
-            return (
-                this.props.isLoggedIn ? (
-                    <View style={styles.composerContainer}>
-                        <Image source={{ uri: this.props.user.profilePic }} style={styles.ProfilePicture} />
-                        <TextInput
-                            style={styles.composerTextInput}
-                            rows='1'
-                            placeholder='Write a comment...'
-                            defaultValue=''
-                            value={this.state.parentComposerValue}
-                            onChangeText={(value) => this.setState({ parentComposerValue: value })}
-                            multiline
-
-                        />
-                        {this.isValidParentComment() &&
-                            <TouchableOpacity
-                                onPress={() => { this.saveComment(this.state.parentComposerValue, null) }}
-                                style={styles.sendBtn}
-                            >
-                                <Image
-                                    source={Images.send}
-                                    style={styles.sendImg} />
-                            </TouchableOpacity>
-                        }
-                    </View>
-                ) : <View>
-                        <View>
-                            {/* TODO: Add link */}
-                            <Text>Please login to post a comment</Text>
-                        </View>
-                    </View>
-            )
-        } else {
-            return (
-                <Text>(Commenting is disabled)</Text>
-            )
-        }
+    editComment = (updatedComment) => {
+        this.props.updateComment(updatedComment)
     }
 
     renderComments = (comments) => {
@@ -171,20 +82,13 @@ class Comments extends Component {
 
                         saveComment={this.saveComment}
                         deleteComment={this.deleteComment}
-                        onPressReply={this.onPressReply}
-                        onPressEdit={this.onPressEdit}
-                        editComment={this.onSubmitEdit}
-                        onPressCancelEdit={this.onPressCancelEdit}
-                        onPressShowReplies={this.onPressShowReplies}
+                        editComment={this.editComment}
+
                         fetchCommentReplies={this.props.fetchCommentReplies}
                         onPressProfile={this.props.onPressProfile}
 
                         replyPage={comment.replyPage}
-                        replyingCommentId={this.state.replyingCommentId}
                         repliesHasNextPage={comment.repliesHasNextPage}
-
-
-                        fetchingRepliesParentId={this.props.fetchingRepliesParentId}
                     />
                 )
             })
@@ -198,15 +102,30 @@ class Comments extends Component {
                 <Text style={styles.commentSectionTitle}>Comments</Text>
 
                 {/* Render Composer */}
-                <Composer />
+                <Composer
+                    enabled={true}
+                    user={this.props.user}
+                    saveComment={this.saveComment}
+                    parentId={null}
+                />
 
                 {/* Render comments */}
                 {this.renderComments(comments)}
 
                 {/* Render see more comments */}
-                {this.renderSeeMoreComments(comments)}
+                <SeeMoreComments
+                    comments={comments}
+                    jobId={this.props.jobId}
+                    hasNextPage={this.props.commentsHasNextPage}
+                    fetchComments={this.props.fetchComments}
+                    page={this.props.commentPage}
+                    isFetching={this.props.isFetchingComments}
+                />
 
                 {/* Fetch comments loader */}
+                {this.props.isFetchingComments && this.props.commentPage === 1 &&
+                    <ActivityIndicator style={styles.seeMoreCommentsLoader} size="small" color={'#d3d3d3'} animating={true} />
+                }
 
             </ScrollView>
         )

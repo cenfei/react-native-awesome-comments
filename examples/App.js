@@ -164,7 +164,7 @@ export default class App extends Component {
     console.log(jobId, page)
   }
 
-  fetchCommentReplies = (parentId, page, jobId) => {
+  fetchCommentReplies = (jobId, page, parentId) => {
     this.setState({ fetchingRepliesParentId: parentId })
     console.log(parentId, jobId, page)
     setTimeout(() => { this.setState({ fetchingRepliesParentId: null }) }, 2000)

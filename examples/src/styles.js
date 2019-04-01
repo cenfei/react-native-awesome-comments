@@ -18,13 +18,13 @@ module.exports = StyleSheet.create({
     composerTextInput: {
         flex: 1,
         backgroundColor: '#e5e5e5',
-        paddingTop: 4,
-        paddingBottom: 8,
+        paddingTop: 5,
+        paddingBottom: 10,
         paddingHorizontal: 18,
-        borderRadius: 22,
+        borderRadius: 18,
         textAlign: 'left',
-        borderBottomLeftRadius: 24.5,
-        borderBottomRightRadius: 24.5,
+        borderBottomLeftRadius: 22,
+        borderBottomRightRadius: 22,
         borderBottomWidth: 5,
         borderColor: '#fff'
     },

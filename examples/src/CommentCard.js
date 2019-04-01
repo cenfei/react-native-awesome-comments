@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Text, View, Image, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
-import Collapsible from 'react-native-collapsible';
 import * as _ from 'lodash';
 import moment from 'moment';
 
@@ -13,12 +12,13 @@ class CommentCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isEditing: false
+            composerValue: this.props.comment.message
         };
     }
 
-    isValidComment = (text) => {
-        text = text.trim();
+
+    isValidComment = () => {
+        text = this.state.composerValue.trim();
         if (_.isEmpty(text)) {
             return false
         } else {
@@ -26,40 +26,69 @@ class CommentCard extends Component {
         }
     }
 
-    toggle = (parentId) => {
-        if (this.state.collapse) {
-            this.props.onPressShowReplies(parentId);
-            this.props.fetchCommentReplies(parentId, 1, this.props.jobId);
-        }
-        this.setState({
-            collapse: !this.state.collapse
-        });
+    onPressEdit = () => {
+        this.setState({ isEditing: true })
     }
 
-    onPressReply = (commentId) => {
-        this.props.onPressReply(commentId)
-        this.setState({
-            collapse: false
-        });
+    onPressCancelEdit = () => {
+        this.setState({ isEditing: false, composerValue: this.props.comment.message })
     }
 
-    seeMoreReplies = (parentId) => {
-        this.props.fetchCommentReplies(parentId, this.props.replyPage + 1, this.props.jobId);
+    onSubmitEdit = (updatedComment) => {
+        this.props.editComment(updatedComment)
+        this.setState({ isEditing: false })
     }
 
-    renderReplyButton = (comment) => <TouchableOpacity style={styles.commentOption} onPress={() => this.onPressReply(comment.commentId)}><Text>Reply</Text></TouchableOpacity>
-    renderEditButton = (comment) => <TouchableOpacity style={styles.commentOption}
-        onPress={() => {
-            this.props.onPressEdit(comment.commentId)
-            this.commentTextInput.focus()
-        }}
-    ><Text>Edit</Text></TouchableOpacity>
-    renderCancelEditButton = () => <TouchableOpacity style={styles.commentOption} onPress={() => {
-        this.props.onPressCancelEdit()
-        this.setState({ editingComposerValue: this.props.comment.message })
-    }}><Text>Cancel</Text></TouchableOpacity>
-    renderDeleteButton = (comment) => <TouchableOpacity style={styles.commentOption} onPress={() => this.props.deleteComment(comment)}><Text>Delete</Text></TouchableOpacity>
-    renderTimeStamp = (createdAt) => <TouchableOpacity style={styles.commentOption}><Text>{moment(new Date(createdAt)).fromNow(true)}</Text></TouchableOpacity>
+    renderReplyButton = () => {
+        return (
+            <TouchableOpacity
+                style={styles.commentOption}
+                onPress={() => this.props.onPressReply()}>
+                <Text>Reply</Text>
+            </TouchableOpacity>)
+    }
+
+    renderEditButton = (comment) => {
+        return (
+            <TouchableOpacity
+                style={styles.commentOption}
+                onPress={() => {
+                    this.onPressEdit()
+                    this.setState({ composerValue: this.props.comment.message })
+                    // this.commentTextInput.focus()
+                }}>
+                <Text>Edit</Text>
+            </TouchableOpacity>)
+    }
+
+    renderCancelEditButton = () => {
+        return (
+            <TouchableOpacity
+                style={styles.commentOption}
+                onPress={() => {
+                    this.onPressCancelEdit();
+                    this.setState({ composerValue: this.props.comment.message })
+                }}>
+                <Text>Cancel</Text>
+            </TouchableOpacity>)
+    }
+
+    renderDeleteButton = (comment) => {
+        return (
+            <TouchableOpacity
+                style={styles.commentOption}
+                onPress={() => this.props.deleteComment(comment)}>
+                <Text>Delete</Text>
+            </TouchableOpacity>)
+    }
+
+    renderTimeStamp = (createdAt) => {
+        return (
+            <TouchableOpacity
+                style={styles.commentOption}>
+                <Text>{moment(new Date(createdAt)).fromNow(true)}</Text>
+            </TouchableOpacity>)
+    }
 
     renderParentOptionPanel = (comment) => {
         if (this.props.loggedInUser.userId === comment.userId) {
@@ -99,44 +128,8 @@ class CommentCard extends Component {
         }
     }
 
-    renderCommentReplying = () => {
-        if (this.props.comment.commentId === this.props.replyingCommentId) {
-            return (
-                < View style={styles.replyCommentComposer}>
-                    <View style={styles.commentCard}>
-                        <Image source={{ uri: this.props.loggedInUser.profilePic }} style={styles.ProfilePicture} />
-                        <TextInput
-                            style={styles.composerTextInput}
-                            placeholder='Write a reply...'
-                            value={this.state.replyingComposerValue}
-                            onChangeText={(value) => { this.setState({ replyingComposerValue: value }) }}
-                            multiline
-                            autoFocus
-                        />
-                        {this.isValidComment(this.state.replyingComposerValue) &&
-                            <View>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        this.props.saveComment(this.state.replyingComposerValue, this.props.comment.commentId);
-                                        this.setState({ replyingComposerValue: '' })
-                                        this.setState({ collapse: true }, () => this.setState({ collapse: false }))
-                                    }}
-                                    style={styles.sendBtn}
-                                >
-                                    <Image
-                                        source={Images.send}
-                                        style={styles.sendImg} />
-                                </TouchableOpacity>
-                            </View>
-                        }
-                    </View>
-                </View>
-            )
-        }
-    }
-
     renderComment = (comment) => {
-        let isEditingComment = (this.props.editingCommentId === comment.commentId)
+        let isEditing = this.state.isEditing;
         return (
             <View key={comment.commentId} style={styles.commentCard}>
 
@@ -154,22 +147,22 @@ class CommentCard extends Component {
                             </TouchableOpacity>
                             <View>
                                 <TextInput
-                                    style={{ color: '#000', padding: 0 }}
-                                    editable={isEditingComment}
+                                    style={[{ color: '#000', padding: 0 }, { borderWidth: isEditing ? 1 : 0 }]}
+                                    editable={isEditing}
                                     ref={input => (this.commentTextInput = input)}
 
                                     placeholder='Write a comment...'
-                                    value={this.state.editingComposerValue}
-                                    onChangeText={(value) => this.setState({ editingComposerValue: value })}
+                                    value={this.state.composerValue}
+                                    onChangeText={(value) => this.setState({ composerValue: value })}
                                     multiline
                                 />
                             </View>
                         </View>
 
-                        {this.isValidComment(this.state.editingComposerValue) && isEditingComment &&
+                        {this.isValidComment(this.state.composerValue) && isEditing &&
                             <View>
                                 <TouchableOpacity
-                                    onPress={() => this.props.editComment({ ...comment, message: this.state.editingComposerValue })}
+                                    onPress={() => this.onSubmitEdit({ ...comment, message: this.state.composerValue })}
                                     style={styles.sendBtn}
                                 >
                                     <Image
@@ -180,8 +173,8 @@ class CommentCard extends Component {
                         }
                     </View>
 
-                    {!isEditingComment && this.props.enabled && this.props.isLoggedIn && (comment.isParent ? this.renderParentOptionPanel(comment) : this.renderChildOptionPanel(comment))}
-                    {isEditingComment && this.renderCancelEditButton()}
+                    {!isEditing && this.props.enabled && !_.isEmpty(this.props.loggedInUser) && (comment.isParent ? this.renderParentOptionPanel(comment) : this.renderChildOptionPanel(comment))}
+                    {isEditing && this.renderCancelEditButton()}
                 </View>
             </View>
         )
@@ -189,54 +182,9 @@ class CommentCard extends Component {
     }
 
     render() {
-        console.log(this.state.collapse)
         return (
             <View style={{ flex: 1 }}>
                 {this.renderComment(this.props.comment)}
-
-                {this.props.comment.childrenCount > 0 &&
-                    <View>
-                        <View style={styles.showRepliesContainer}>
-                            <View style={styles.showRepliesButton}>
-                                <TouchableOpacity onPress={() => { this.toggle(this.props.comment.commentId) }} >
-                                    <Text>{
-                                        `${this.state.collapse ? 'Show' : 'Hide'} ${this.state.collapse ? this.props.comment.childrenCount : ''} ${this.props.comment.childrenCount === 1 ? 'Reply' : 'Replies'}`
-                                    }</Text>
-                                </TouchableOpacity>
-                            </View>
-
-                            {this.props.replyPage === 1 && (this.props.fetchingRepliesParentId === this.props.comment.commentId) &&
-                                < View style={styles.showRepliesLoader}>
-                                    <ActivityIndicator size="small" color={'#d3d3d3'} animating={true} />
-                                </View>
-                            }
-                        </View>
-
-                        <Collapsible
-                            style={{ flex: 1 }}
-                            easing="easeOutCubic"
-                            collapsed={this.state.collapse}>
-                            <View style={styles.replyComments}>
-                                {this.props.replies.map((reply) => this.renderComment(reply))}
-                                <View style={styles.seeMoreRepliesContainer}>
-                                    {this.props.repliesHasNextPage &&
-                                        <View>
-                                            <TouchableOpacity onPress={() => this.seeMoreReplies(this.props.comment.commentId)} disabled={this.props.isFetchingReplies}>
-                                                <Text>See more replies</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    }
-                                    {this.props.replyPage !== 1 && (this.props.fetchingRepliesParentId === this.props.comment.commentId) &&
-                                        < View style={styles.seeMoreRepliesLoader}>
-                                            <ActivityIndicator size="small" color={'#d3d3d3'} animating={true} />
-                                        </View>
-                                    }
-                                </View>
-                            </View>
-                        </Collapsible>
-                    </View>
-                }
-                {this.renderCommentReplying()}
             </View>
         )
     }

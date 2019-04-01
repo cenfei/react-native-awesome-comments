@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import {
     Text,
     View,
+    Image,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native';
+import * as _ from 'lodash';
 
-
+import Images from './images';
 import styles from "./styles";
 
 class Composer extends Component {
@@ -42,7 +44,7 @@ class Composer extends Component {
                         />
                         {this.isValidComment() &&
                             <TouchableOpacity
-                                onPress={() => { this.props.saveComment(this.state.composerValue, this.props.parentId) }}
+                                onPress={() => { this.props.saveComment(this.state.composerValue, this.props.parentId); this.setState({ composerValue: '' }) }}
                                 style={styles.sendBtn}
                             >
                                 <Image
@@ -68,7 +70,7 @@ class Composer extends Component {
     render() {
         return (
             <View>
-                <Text>Composer</Text>
+                {this.renderComposer()}
             </View>
         )
     }
