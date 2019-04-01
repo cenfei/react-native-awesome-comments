@@ -55,6 +55,7 @@ module.exports = StyleSheet.create({
         paddingVertical: 9,
         paddingHorizontal: 18,
         borderRadius: 25,
+        borderColor: '#a5a5a5'
     },
     commentName: {
         marginRight: 10,
@@ -76,7 +77,7 @@ module.exports = StyleSheet.create({
         paddingLeft: 16
     },
     replyCommentComposer: {
-        paddingLeft: 50
+        paddingLeft: 67
     },
     replyComments: {
         flex: 1,

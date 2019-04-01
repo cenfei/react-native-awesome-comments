@@ -16,7 +16,6 @@ class CommentCard extends Component {
         };
     }
 
-
     isValidComment = () => {
         text = this.state.composerValue.trim();
         if (_.isEmpty(text)) {
@@ -55,7 +54,7 @@ class CommentCard extends Component {
                 onPress={() => {
                     this.onPressEdit()
                     this.setState({ composerValue: this.props.comment.message })
-                    // this.commentTextInput.focus()
+                    this.commentTextInput.focus()
                 }}>
                 <Text>Edit</Text>
             </TouchableOpacity>)
@@ -77,7 +76,7 @@ class CommentCard extends Component {
         return (
             <TouchableOpacity
                 style={styles.commentOption}
-                onPress={() => this.props.deleteComment(comment)}>
+                onPress={() => this.props.onPressDelete(comment)}>
                 <Text>Delete</Text>
             </TouchableOpacity>)
     }
@@ -139,15 +138,18 @@ class CommentCard extends Component {
 
                 <View style={{ flex: 1 }}>
                     <View style={styles.row}>
-                        <View style={styles.textSection}>
-                            <TouchableOpacity onPress={() => this.props.onPressProfile(comment.userId)}>
-                                <Text style={styles.commentName}>
-                                    {comment.name}
-                                </Text>
-                            </TouchableOpacity>
+                        <View style={[styles.textSection, { borderWidth: isEditing ? 0.6 : 0 }]}>
+                            {!isEditing &&
+                                <TouchableOpacity onPress={() => this.props.onPressProfile(comment.userId)}>
+                                    <Text style={styles.commentName}>
+                                        {comment.name}
+                                    </Text>
+                                </TouchableOpacity>
+                            }
+
                             <View>
                                 <TextInput
-                                    style={[{ color: '#000', padding: 0 }, { borderWidth: isEditing ? 1 : 0 }]}
+                                    style={{ color: '#000', padding: 0 }}
                                     editable={isEditing}
                                     ref={input => (this.commentTextInput = input)}
 

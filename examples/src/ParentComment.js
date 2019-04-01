@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
     Text,
     View,
+    Alert,
     TouchableOpacity
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
@@ -21,6 +22,28 @@ class ParentComment extends Component {
         };
     }
 
+    onPressDelete = (comment) => {
+        Alert.alert(
+            'Deleting Comment',
+            'Are you sure you want to delete this comment?',
+            [
+                {
+                    text: 'DELETE', onPress: () => {
+                        this.props.deleteComment(comment);
+                        this.resetCollapsible()
+                    }
+                },
+                {
+                    text: 'CANCEL',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                }
+            ],
+            { cancelable: true },
+        );
+
+    }
+
     toggleShowReplies = (parentId) => {
         if (this.state.collapse) {
             this.props.fetchCommentReplies(parentId, 1, this.props.jobId);
@@ -31,7 +54,11 @@ class ParentComment extends Component {
     }
 
     onPressReply = () => {
-        this.setState({ isReplying: true });
+        this.setState({ isReplying: true, collapse: false });
+    }
+
+    resetCollapsible = () => {
+        this.setState({ collapse: true }, () => this.setState({ collapse: false }))
     }
 
     renderParentComment = (comment) => {
@@ -43,10 +70,10 @@ class ParentComment extends Component {
                 comment={this.props.comment}
 
                 saveComment={this.props.saveComment}
-                deleteComment={this.props.deleteComment}
                 editComment={this.props.editComment}
 
                 onPressReply={this.onPressReply}
+                onPressDelete={this.onPressDelete}
 
                 fetchCommentReplies={this.props.fetchCommentReplies}
                 onPressProfile={this.props.onPressProfile}
@@ -73,12 +100,15 @@ class ParentComment extends Component {
                         editComment={this.props.editComment}
 
                         onPressReply={this.onPressReply}
+                        onPressDelete={this.onPressDelete}
 
                         fetchCommentReplies={this.props.fetchCommentReplies}
                         onPressProfile={this.props.onPressProfile}
 
                         replyPage={reply.replyPage}
                         repliesHasNextPage={reply.repliesHasNextPage}
+
+                        resetCollapsible={this.resetCollapsible}
 
                     />
                 )
@@ -148,13 +178,18 @@ class ParentComment extends Component {
                 {this.renderRepliesCollapsible()}
 
                 {/* Render reply composer */}
-                {this.state.isReplying &&
-                    <Composer
-                        enabled={true}
-                        user={this.props.loggedInUser}
-                        saveComment={this.props.saveComment}
-                        parentId={this.props.comment.commentId}
-                    />}
+                <View style={styles.replyCommentComposer}>
+                    {this.state.isReplying &&
+                        <Composer
+                            enabled={true}
+                            user={this.props.loggedInUser}
+                            saveComment={this.props.saveComment}
+                            parentId={this.props.comment.commentId}
+                            resetCollapsible={this.resetCollapsible}
+                            isReply={true}
+                        />
+                    }
+                </View>
 
             </View>
         )

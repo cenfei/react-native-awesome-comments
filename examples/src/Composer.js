@@ -44,7 +44,11 @@ class Composer extends Component {
                         />
                         {this.isValidComment() &&
                             <TouchableOpacity
-                                onPress={() => { this.props.saveComment(this.state.composerValue, this.props.parentId); this.setState({ composerValue: '' }) }}
+                                onPress={() => {
+                                    this.props.saveComment(this.state.composerValue, this.props.parentId);
+                                    this.setState({ composerValue: '' });
+                                    if (this.props.isReply) { this.props.resetCollapsible() }
+                                }}
                                 style={styles.sendBtn}
                             >
                                 <Image

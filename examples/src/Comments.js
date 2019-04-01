@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import {
     Text,
     View,
-    ActivityIndicator, ScrollView,
-    Alert
+    ActivityIndicator,
+    ScrollView,
+    KeyboardAvoidingView
 } from 'react-native';
 import * as _ from 'lodash';
 
@@ -45,23 +46,6 @@ class Comments extends Component {
         this.props.saveComment(comment)
     }
 
-    deleteComment = (comment) => {
-        Alert.alert(
-            'Deleting Comment',
-            'Are you sure you want to delete this comment?',
-            [
-                { text: 'DELETE', onPress: () => this.props.deleteComment(comment) },
-                {
-                    text: 'CANCEL',
-                    onPress: () => console.log('Cancel Pressed'),
-                    style: 'cancel',
-                }
-            ],
-            { cancelable: true },
-        );
-
-    }
-
     editComment = (updatedComment) => {
         this.props.updateComment(updatedComment)
     }
@@ -81,7 +65,7 @@ class Comments extends Component {
                         replies={replies}
 
                         saveComment={this.saveComment}
-                        deleteComment={this.deleteComment}
+                        deleteComment={this.props.deleteComment}
                         editComment={this.editComment}
 
                         fetchCommentReplies={this.props.fetchCommentReplies}
@@ -107,6 +91,7 @@ class Comments extends Component {
                     user={this.props.user}
                     saveComment={this.saveComment}
                     parentId={null}
+                    isReply={false}
                 />
 
                 {/* Render comments */}
