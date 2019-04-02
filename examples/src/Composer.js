@@ -37,7 +37,6 @@ class Composer extends Component {
                         <TextInput
                             style={styles.composerTextInput}
                             placeholder='Write a comment...'
-                            defaultValue=''
                             value={this.state.composerValue}
                             onChangeText={(value) => this.setState({ composerValue: value })}
                             multiline

@@ -18,7 +18,9 @@ class ParentComment extends Component {
         super(props);
         this.state = {
             collapse: true,
-            isReplying: false
+            isReplying: false,
+            page: 1,
+            isFetchingReplies: false
         };
     }
 
@@ -44,9 +46,14 @@ class ParentComment extends Component {
 
     }
 
-    toggleShowReplies = (parentId) => {
+    toggleShowReplies = () => {
         if (this.state.collapse) {
-            this.props.fetchCommentReplies(this.props.jobId, 1, parentId);
+            this.setState({ isFetchingReplies: true })
+            this.props.fetchCommentReplies({
+                page: 1,
+                onSuccess: () => this.setState({ isFetchingReplies: false }),
+                onFail: () => this.setState({ isFetchingReplies: false })
+            })
         }
         this.setState({
             collapse: !this.state.collapse
@@ -66,7 +73,7 @@ class ParentComment extends Component {
             <CommentCard
                 key={comment.commentId}
                 enabled={this.props.enabled}
-                loggedInUser={this.props.loggedInUser}
+                loggedInUser={this.props.loggedInUser}    // USDERID
                 comment={this.props.comment}
 
                 saveComment={this.props.saveComment}
@@ -74,8 +81,6 @@ class ParentComment extends Component {
 
                 onPressReply={this.onPressReply}
                 onPressDelete={this.onPressDelete}
-
-                fetchCommentReplies={this.props.fetchCommentReplies}
                 onPressProfile={this.props.onPressProfile}
 
                 replyPage={comment.replyPage}
@@ -96,17 +101,11 @@ class ParentComment extends Component {
                         comment={reply}
 
                         saveComment={this.props.saveComment}
-                        deleteComment={this.props.deleteComment}
                         editComment={this.props.editComment}
 
                         onPressReply={this.onPressReply}
                         onPressDelete={this.onPressDelete}
-
-                        fetchCommentReplies={this.props.fetchCommentReplies}
                         onPressProfile={this.props.onPressProfile}
-
-                        replyPage={reply.replyPage}
-                        repliesHasNextPage={reply.repliesHasNextPage}
 
                         resetCollapsible={this.resetCollapsible}
 
@@ -132,7 +131,7 @@ class ParentComment extends Component {
                     </View>
 
                     {/* Show replies loader */}
-                    {this.props.replyPage === 1 && this.props.isFetchingReplies &&
+                    {this.state.page === 1 && this.state.isFetchingReplies &&
                         < View style={styles.showRepliesLoader}>
                             <ActivityIndicator size="small" color={'#d3d3d3'} animating={true} />
                         </View>
@@ -152,12 +151,19 @@ class ParentComment extends Component {
                         {/* Render see more replies */}
                         <SeeMoreComments
                             seeMoreReplies={true}
-                            comments={this.props.replies}
-                            jobId={this.props.jobId}
-                            fetchComments={this.props.fetchCommentReplies}
+                            fetchComments={() => {
+                                let nextPage = this.state.page + 1
+                                this.setState({ page: nextPage, isFetchingReplies: true })
+                                this.props.fetchCommentReplies({
+                                    page: nextPage,
+                                    onSuccess: () => { this.setState({ isFetchingReplies: false }) },
+                                    onFail: () => { this.setState({ isFetchingReplies: false }) }
+                                }
+                                )
+                            }}
+                            page={this.state.page}
                             hasNextPage={this.props.repliesHasNextPage}
-                            page={this.props.replyPage}
-                            isFetching={this.props.isFetchingReplies}
+                            isFetching={this.state.isFetchingReplies}
                             parentId={this.props.comment.commentId}
                         />
 
@@ -183,7 +189,7 @@ class ParentComment extends Component {
                     {this.state.isReplying &&
                         <Composer
                             enabled={true}
-                            user={this.props.loggedInUser}
+                            user={this.props.loggedInUser}  // profile pic
                             saveComment={this.props.saveComment}
                             parentId={this.props.comment.commentId}
                             resetCollapsible={this.resetCollapsible}

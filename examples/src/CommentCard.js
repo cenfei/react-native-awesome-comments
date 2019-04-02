@@ -63,14 +63,17 @@ class CommentCard extends Component {
 
     renderCancelEditButton = () => {
         return (
-            <TouchableOpacity
-                style={styles.commentOption}
-                onPress={() => {
-                    this.onPressCancelEdit();
-                    this.setState({ composerValue: this.props.comment.message })
-                }}>
-                <Text>Cancel</Text>
-            </TouchableOpacity>)
+            <View style={styles.optionPanel}>
+                <TouchableOpacity
+                    style={styles.commentOption}
+                    onPress={() => {
+                        this.onPressCancelEdit();
+                        this.setState({ composerValue: this.props.comment.message })
+                    }}>
+                    <Text>Cancel</Text>
+                </TouchableOpacity>
+            </View>
+        )
     }
 
     renderDeleteButton = (comment) => {
@@ -140,13 +143,11 @@ class CommentCard extends Component {
                 <View style={{ flex: 1 }}>
                     <View style={styles.row}>
                         <View style={[styles.textSection, { borderWidth: isEditing ? 0.6 : 0 }]}>
-                            {!isEditing &&
-                                <TouchableOpacity onPress={() => this.props.onPressProfile(comment.userId)}>
-                                    <Text style={styles.commentName}>
-                                        {comment.name}
-                                    </Text>
-                                </TouchableOpacity>
-                            }
+                            <TouchableOpacity onPress={() => this.props.onPressProfile(comment.userId)}>
+                                <Text style={styles.commentName}>
+                                    {comment.name}
+                                </Text>
+                            </TouchableOpacity>
 
                             <View>
                                 <TextInput

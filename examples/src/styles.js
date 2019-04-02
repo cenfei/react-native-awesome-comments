@@ -4,6 +4,10 @@ module.exports = StyleSheet.create({
     container: {
         flex: 1
     },
+    row: {
+        flex: 1,
+        flexDirection: 'row'
+    },
     commentSectionTitle: {
         margin: 5,
         fontWeight: 'bold'
@@ -69,13 +73,6 @@ module.exports = StyleSheet.create({
         marginHorizontal: 5,
         marginVertical: 2
     },
-    row: {
-        flex: 1,
-        flexDirection: 'row'
-    },
-    cancelCommentEdit: {
-        paddingLeft: 16
-    },
     replyCommentComposer: {
         paddingLeft: 67
     },
@@ -104,14 +101,6 @@ module.exports = StyleSheet.create({
         paddingLeft: 67
     },
     showRepliesLoader: {
-        marginLeft: 10
-    },
-
-    seeMoreRepliesContainer: {
-        flexDirection: 'row',
-        paddingLeft: 10
-    },
-    seeMoreRepliesLoader: {
         marginLeft: 10
     }
 })

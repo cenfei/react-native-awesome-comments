@@ -19,21 +19,23 @@ class Comments extends Component {
     }
 
     componentWillMount() {
-        this.props.fetchComments(this.props.jobId, 1);
+        this.props.fetchComments(1);
     }
 
     saveComment = (text, parentId) => {
 
         let comment = {
             jobId: this.props.jobId,
-            parentId: null,
             commentId: new Date().getTime().toString(),
             name: this.props.user.name,
             message: text,
             createdAt: (new Date()).toISOString(),
             userId: this.props.user.userId,
-            isParent: false,
-            profilePic: this.props.user.profilePic
+            profilePic: this.props.user.profilePic,
+
+            // TODO: refactor
+            parentId: null,
+            isParent: false
         }
 
         if (!parentId) {
@@ -43,10 +45,6 @@ class Comments extends Component {
             comment.parentId = parentId
         }
         this.props.saveComment(comment)
-    }
-
-    editComment = (updatedComment) => {
-        this.props.updateComment(updatedComment)
     }
 
     renderComments = (comments) => {
@@ -60,15 +58,15 @@ class Comments extends Component {
                         key={comment.commentId}
                         enabled={this.props.enabled}
                         loggedInUser={this.props.user}
-                        jobId={this.props.jobId}
                         comment={comment}
                         replies={replies}
 
                         saveComment={this.saveComment}
                         deleteComment={this.props.deleteComment}
-                        editComment={this.editComment}
+                        editComment={this.props.updateComment}
 
-                        fetchCommentReplies={this.props.fetchCommentReplies}
+
+                        fetchCommentReplies={({ page, onSuccess, onFail }) => this.props.fetchCommentReplies({ page, parentId: comment.commentId, onSuccess, onFail })}
                         onPressProfile={this.props.onPressProfile}
 
                         replyPage={comment.replyPage}
@@ -81,29 +79,26 @@ class Comments extends Component {
     }
 
     render() {
-        const comments = _.get(this.props.comments, `[${this.props.jobId}]`, []);
         return (
-            <ScrollView style={styles.container} >
-                <Text style={styles.commentSectionTitle}>Comments</Text>
+            <ScrollView style={[styles.container, this.props.style]} >
+                {this.props.title && <Text style={styles.commentSectionTitle}>{this.props.title}</Text>}
 
                 {/* Render Composer */}
                 <Composer
-                    enabled={true}
+                    enabled={this.props.enabled}
                     user={this.props.user}
                     saveComment={this.saveComment}
                     parentId={null}
-                    isReply={false}
+                    isReply={false} // REMOVE
                 />
 
                 {/* Render comments */}
-                {this.renderComments(comments)}
+                {this.renderComments(this.props.comments)}
 
                 {/* Render see more comments */}
                 <SeeMoreComments
                     seeMoreReplies={false}
-                    comments={comments}
-                    jobId={this.props.jobId}
-                    fetchComments={this.props.fetchComments}
+                    fetchComments={() => this.props.fetchComments(this.props.commentPage + 1)}
                     hasNextPage={this.props.commentsHasNextPage}
                     page={this.props.commentPage}
                     isFetching={this.props.isFetchingComments}
@@ -113,6 +108,8 @@ class Comments extends Component {
                 {this.props.isFetchingComments && this.props.commentPage === 1 &&
                     <ActivityIndicator style={styles.seeMoreCommentsLoader} size="small" color={'#d3d3d3'} animating={true} />
                 }
+
+                <View style={{ height: 50 }} />
 
             </ScrollView>
         )

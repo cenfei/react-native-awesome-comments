@@ -11,7 +11,6 @@ import styles from "./styles";
 
 /*Props
 comments
-jobId
 hasNextPage
 fetchComments()
 page
@@ -26,17 +25,16 @@ class SeeMoreComments extends Component {
     }
 
     seeMoreReplies = (parentId) => {
-        this.props.fetchCommentReplies(this.props.jobId, this.props.replyPage + 1, parentId);
+        this.props.fetchCommentReplies(parentId);
     }
 
     render() {
-        const comments = this.props.comments;
         return (
             <View style={styles.seeMoreCommentsContainer}>
-                {!_.isEmpty(comments) && (this.props.hasNextPage) &&
+                {this.props.hasNextPage &&
                     <TouchableOpacity
                         style={styles.seeMoreCommentsBtn}
-                        onPress={() => this.props.fetchComments(this.props.jobId, this.props.page + 1, this.props.parentId)}
+                        onPress={this.props.fetchComments}
                         disabled={this.props.isFetching}>
                         <Text>{`See more ${this.props.seeMoreReplies ? 'replies' : 'comments'}`}</Text>
                     </TouchableOpacity>

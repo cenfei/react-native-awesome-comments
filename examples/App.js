@@ -162,7 +162,7 @@ export default class App extends Component {
         ]
       },
 
-      commentPage: 1,
+      commentPage: 2,
       isFetchingComments: false,
       commentsHasNextPage: true,
 
@@ -179,10 +179,9 @@ export default class App extends Component {
 
   }
 
-  fetchCommentReplies = (jobId, page, parentId) => {
-    this.setState({ fetchingRepliesParentId: parentId })
-    console.log(jobId, page, parentId)
-    setTimeout(() => { this.setState({ fetchingRepliesParentId: null }) }, 2000)
+  fetchCommentReplies = ({ page, parentId, onSuccess, onFail }) => {
+    console.log(parentId, page)
+    setTimeout(() => { onSuccess() }, 3000)
   }
 
   saveComment = (comment) => {
@@ -265,13 +264,12 @@ export default class App extends Component {
         <Comments
           //Passed as props
           enabled={true}
-          isLoggedIn={true}
           jobId={'5c6e4ba530972c31b294c429'}
           //location={this.props.location} TODO
 
           //mapStateToProps
           user={this.state.user}
-          comments={this.state.comments}
+          comments={this.state.comments['5c6e4ba530972c31b294c429']}
           commentPage={this.state.commentPage}
           isFetchingComments={this.state.isFetchingComments}
           commentsHasNextPage={this.state.commentsHasNextPage}
@@ -279,12 +277,14 @@ export default class App extends Component {
           replies={this.state.replies}
 
           //Methods
-          fetchComments={this.fetchComments}
+          fetchComments={(page) => this.fetchComments('5c6e4ba530972c31b294c429', page)}
           saveComment={this.saveComment}
           updateComment={this.updateComment}
           deleteComment={this.deleteComment}
           fetchCommentReplies={this.fetchCommentReplies}
           onPressProfile={this.onPressProfile}
+
+          style={{ padding: 20 }}
         />
 
       </View>
