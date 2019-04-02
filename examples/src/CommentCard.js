@@ -12,7 +12,8 @@ class CommentCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            composerValue: this.props.comment.message
+            composerValue: this.props.comment.message,
+            isEditing: false
         };
     }
 

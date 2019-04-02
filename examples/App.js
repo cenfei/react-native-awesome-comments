@@ -56,6 +56,7 @@ export default class App extends Component {
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
             repliesHasNextPage: true,
             replyPage: 1,
+            isFetchingReplies: false,
             userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
             _id: "5c8b6af797da8f43664235ac",
           },
@@ -85,7 +86,7 @@ export default class App extends Component {
             parentId: null,
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
             userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
-            _id: "5c8a08183e3c5a5ccb264d5f"
+            _id: "5c8a08183e3c555ccb264d5f"
           },
           {
 
@@ -99,7 +100,7 @@ export default class App extends Component {
             parentId: null,
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
             userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
-            _id: "5c8a08183e3c5a5ccb264d5f"
+            _id: "5c8a08fg83e3c5a5ccb264d5f"
           },
           {
 
@@ -113,7 +114,7 @@ export default class App extends Component {
             parentId: null,
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
             userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
-            _id: "5c8a08183e3c5a5ccb264d5f"
+            _id: "5c8a08183e3ca5ccb264d5f"
           },
           {
             childrenCount: 0,
@@ -127,6 +128,19 @@ export default class App extends Component {
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
             userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
             _id: "5c8a08163e3c5a64e1264d5e"
+          },
+          {
+            childrenCount: 0,
+            commentId: "5c8a08163e3c5a64e1264d6e",
+            createdAt: "2019-02-11T07:51:50.153Z",
+            isParent: true,
+            jobId: "5c6e4ba530972c31b294c429",
+            message: "hehee enim ad minim hola",
+            name: "Raptor",
+            parentId: null,
+            profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
+            userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
+            _id: "5c8a08163e3c5a64e1264d6e"
           }
         ]
       },
@@ -152,8 +166,6 @@ export default class App extends Component {
       isFetchingComments: false,
       commentsHasNextPage: true,
 
-      fetchingRepliesParentId: null,
-
       pageSize: 5
     };
 
@@ -161,12 +173,15 @@ export default class App extends Component {
   }
 
   fetchComments = (jobId, page) => {
-    console.log(jobId, page)
+    this.setState({ isFetchingComments: true })
+    console.log(jobId, page);
+    setTimeout(() => { this.setState({ isFetchingComments: false }) }, 5000)
+
   }
 
   fetchCommentReplies = (jobId, page, parentId) => {
     this.setState({ fetchingRepliesParentId: parentId })
-    console.log(parentId, jobId, page)
+    console.log(jobId, page, parentId)
     setTimeout(() => { this.setState({ fetchingRepliesParentId: null }) }, 2000)
   }
 
@@ -262,7 +277,6 @@ export default class App extends Component {
           commentsHasNextPage={this.state.commentsHasNextPage}
 
           replies={this.state.replies}
-          fetchingRepliesParentId={this.state.fetchingRepliesParentId}
 
           //Methods
           fetchComments={this.fetchComments}

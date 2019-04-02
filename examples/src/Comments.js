@@ -12,7 +12,6 @@ import styles from "./styles";
 import { ParentComment } from './ParentComment';
 import { Composer } from './Composer';
 import { SeeMoreComments } from './SeeMoreComments'
-
 class Comments extends Component {
     constructor(props) {
         super(props);
@@ -20,7 +19,7 @@ class Comments extends Component {
     }
 
     componentWillMount() {
-        //this.props.fetchComments(this.props.jobId, 1);
+        this.props.fetchComments(this.props.jobId, 1);
     }
 
     saveComment = (text, parentId) => {
@@ -61,6 +60,7 @@ class Comments extends Component {
                         key={comment.commentId}
                         enabled={this.props.enabled}
                         loggedInUser={this.props.user}
+                        jobId={this.props.jobId}
                         comment={comment}
                         replies={replies}
 
@@ -73,6 +73,7 @@ class Comments extends Component {
 
                         replyPage={comment.replyPage}
                         repliesHasNextPage={comment.repliesHasNextPage}
+                        isFetchingReplies={comment.isFetchingReplies}
                     />
                 )
             })
@@ -99,10 +100,11 @@ class Comments extends Component {
 
                 {/* Render see more comments */}
                 <SeeMoreComments
+                    seeMoreReplies={false}
                     comments={comments}
                     jobId={this.props.jobId}
-                    hasNextPage={this.props.commentsHasNextPage}
                     fetchComments={this.props.fetchComments}
+                    hasNextPage={this.props.commentsHasNextPage}
                     page={this.props.commentPage}
                     isFetching={this.props.isFetchingComments}
                 />

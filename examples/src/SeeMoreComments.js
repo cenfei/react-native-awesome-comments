@@ -26,11 +26,11 @@ class SeeMoreComments extends Component {
     }
 
     seeMoreReplies = (parentId) => {
-        this.props.fetchCommentReplies(parentId, this.props.replyPage + 1, this.props.jobId);
+        this.props.fetchCommentReplies(this.props.jobId, this.props.replyPage + 1, parentId);
     }
 
     render() {
-        const comments = _.get(this.props.comments, `[${this.props.jobId}]`, []);
+        const comments = this.props.comments;
         return (
             <View style={styles.seeMoreCommentsContainer}>
                 {!_.isEmpty(comments) && (this.props.hasNextPage) &&
@@ -38,7 +38,7 @@ class SeeMoreComments extends Component {
                         style={styles.seeMoreCommentsBtn}
                         onPress={() => this.props.fetchComments(this.props.jobId, this.props.page + 1, this.props.parentId)}
                         disabled={this.props.isFetching}>
-                        <Text>See more comments</Text>
+                        <Text>{`See more ${this.props.seeMoreReplies ? 'replies' : 'comments'}`}</Text>
                     </TouchableOpacity>
                 }
 

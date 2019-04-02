@@ -3,7 +3,8 @@ import {
     Text,
     View,
     Alert,
-    TouchableOpacity
+    TouchableOpacity,
+    ActivityIndicator
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 
@@ -17,7 +18,6 @@ class ParentComment extends Component {
         super(props);
         this.state = {
             collapse: true,
-            isFetchingReplies: false,
             isReplying: false
         };
     }
@@ -46,7 +46,7 @@ class ParentComment extends Component {
 
     toggleShowReplies = (parentId) => {
         if (this.state.collapse) {
-            this.props.fetchCommentReplies(parentId, 1, this.props.jobId);
+            this.props.fetchCommentReplies(this.props.jobId, 1, parentId);
         }
         this.setState({
             collapse: !this.state.collapse
@@ -132,7 +132,7 @@ class ParentComment extends Component {
                     </View>
 
                     {/* Show replies loader */}
-                    {this.props.replyPage === 1 && this.state.isFetchingReplies &&
+                    {this.props.replyPage === 1 && this.props.isFetchingReplies &&
                         < View style={styles.showRepliesLoader}>
                             <ActivityIndicator size="small" color={'#d3d3d3'} animating={true} />
                         </View>
@@ -151,10 +151,11 @@ class ParentComment extends Component {
 
                         {/* Render see more replies */}
                         <SeeMoreComments
+                            seeMoreReplies={true}
                             comments={this.props.replies}
                             jobId={this.props.jobId}
-                            hasNextPage={this.props.repliesHasNextPage}
                             fetchComments={this.props.fetchCommentReplies}
+                            hasNextPage={this.props.repliesHasNextPage}
                             page={this.props.replyPage}
                             isFetching={this.props.isFetchingReplies}
                             parentId={this.props.comment.commentId}
