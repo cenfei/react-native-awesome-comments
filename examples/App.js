@@ -45,7 +45,7 @@ export default class App extends Component {
         'initial': [],
         '5c6e4ba530972c31b294c429': [
           {
-            childrenCount: 2,
+            childrenCount: 7,
             commentId: "5c8b6af797da8f43664235ac",
             createdAt: "2019-03-15T09:05:59.731Z",
             isParent: true,
@@ -170,6 +170,66 @@ export default class App extends Component {
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
             userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
             _id: "5c94ea5074395ce71986523b"
+          },
+          {
+            commentId: "5c94ea5071395ce71986523b",
+            createdAt: "2019-03-22T13:59:44.070Z",
+            isParent: false,
+            jobId: "5c6e4ba530972c31b294c429",
+            message: "deleniti laudantium, totam rem aperiam, atque corrupti quos dolores aperiam, atque corrupti quos deleniti laudantium, totam",
+            name: "Raptor",
+            parentId: "5c8b6af797da8f43664235ac",
+            profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
+            userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
+            _id: "5c94ea5071395ce71986523b"
+          },
+          {
+            commentId: "5c2fea5074395ce71986523b",
+            createdAt: "2019-03-22T13:59:44.070Z",
+            isParent: false,
+            jobId: "5c6e4ba530972c31b294c429",
+            message: "deleniti atque corrupti quos dolores ",
+            name: "Raptor",
+            parentId: "5c8b6af797da8f43664235ac",
+            profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
+            userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
+            _id: "5c2fea5074395ce71986523b"
+          },
+          {
+            commentId: "5c94ea5f64395ce71986523b",
+            createdAt: "2019-03-22T13:59:44.070Z",
+            isParent: false,
+            jobId: "5c6e4ba530972c31b294c429",
+            message: "quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat",
+            name: "Raptor",
+            parentId: "5c8b6af797da8f43664235ac",
+            profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
+            userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
+            _id: "5c94ea5f64395ce71986523b"
+          },
+          {
+            commentId: "5c948uh074395ce71986523b",
+            createdAt: "2019-03-22T13:59:44.070Z",
+            isParent: false,
+            jobId: "5c6e4ba530972c31b294c429",
+            message: "quidem rerum facilis est et expedita distinctio.",
+            name: "Raptor",
+            parentId: "5c8b6af797da8f43664235ac",
+            profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
+            userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
+            _id: "5c948uh074395ce71986523b"
+          },
+          {
+            commentId: "5c94ea5gx4395ce71986523b",
+            createdAt: "2019-03-22T13:59:44.070Z",
+            isParent: false,
+            jobId: "5c6e4ba530972c31b294c429",
+            message: "deleniti atque corrupti quos dolores delectus, ut aut reiciendis voluptatibus maiores",
+            name: "Raptor",
+            parentId: "5c8b6af797da8f43664235ac",
+            profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
+            userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
+            _id: "5c94ea5gx4395ce71986523b"
           }
         ],
         '5c8a08183e3c555ccb264d5f': [
