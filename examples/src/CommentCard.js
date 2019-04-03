@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import { Text, View, Image, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import * as _ from 'lodash';
 import moment from 'moment';
+import { Dimensions } from "react-native";
 
 import Images from './images';
 import styles from "./styles";
 
+const screenWidth = Math.round(Dimensions.get('window').width);
 
+const childWidth = screenWidth - 176
 
 class CommentCard extends Component {
     constructor(props) {
@@ -138,16 +141,16 @@ class CommentCard extends Component {
                     <Image source={{ uri: comment.profilePic }} style={styles.ProfilePicture} />
                 </TouchableOpacity>
 
-                <View style={{ flex: 1 }}>
-                    <View style={styles.row}>
-                        <View style={[styles.textInputSection, { borderWidth: isEditing ? 0.6 : 0, flex: 1 }]}>
+                <View style={{ backgroundColor: 'green', flex: comment.isParent ? 1 : 0, width: comment.isParent ? 'auto' : childWidth }}>
+                    <View style={{ flexDirection: 'row', flex: 1, backgroundColor: 'aqua' }}>
+                        <View style={[styles.textInputSection, { borderWidth: isEditing ? 0.6 : 0, flex: 1, backgroundColor: 'blue' }]}>
                             <TouchableOpacity onPress={() => this.props.onPressProfile(comment.userId)}>
                                 <Text style={styles.commentName}>
                                     {comment.name}
                                 </Text>
                             </TouchableOpacity>
 
-                            <View style={[styles.row, { justifyContent: 'space-between' }]}>
+                            <View style={[styles.row, { justifyContent: 'space-between', backgroundColor: 'pink' }]}>
 
                                 <TextInput
                                     style={styles.inputBox}
@@ -187,7 +190,7 @@ class CommentCard extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: 'red' }}>
                 {this.renderComment(this.props.comment)}
             </View>
         )
