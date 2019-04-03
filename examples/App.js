@@ -258,6 +258,10 @@ export default class App extends Component {
     Alert.alert(userId)
   }
 
+  onPressLogIn = () => {
+    Alert.alert("Pressed LogIn")
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -269,7 +273,7 @@ export default class App extends Component {
 
           //mapStateToProps
           user={this.state.user}
-          comments={[]}
+          comments={this.state.comments['5c6e4ba530972c31b294c429']}
           commentPage={this.state.commentPage}
           isFetchingComments={this.state.isFetchingComments}
           commentsHasNextPage={this.state.commentsHasNextPage}
@@ -282,7 +286,9 @@ export default class App extends Component {
           updateComment={this.updateComment}
           deleteComment={this.deleteComment}
           fetchCommentReplies={this.fetchCommentReplies}
+
           onPressProfile={this.onPressProfile}
+          onPressLogIn={this.onPressLogIn}
 
           style={{ padding: 20 }}
         />

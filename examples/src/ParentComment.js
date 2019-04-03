@@ -193,6 +193,7 @@ class ParentComment extends Component {
                             saveComment={this.props.saveComment}
                             parentId={this.props.comment.commentId}
                             resetCollapsible={this.resetCollapsible}
+                            onPressLogIn={this.props.onPressLogIn}
                         />
                     }
                 </View>

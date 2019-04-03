@@ -68,6 +68,7 @@ class Comments extends Component {
 
                         fetchCommentReplies={({ page, onSuccess, onFail }) => this.props.fetchCommentReplies({ page, parentId: comment.commentId, onSuccess, onFail })}
                         onPressProfile={this.props.onPressProfile}
+                        onPressLogIn={this.props.onPressLogIn}
 
                         replyPage={comment.replyPage}
                         repliesHasNextPage={comment.repliesHasNextPage}
@@ -89,23 +90,28 @@ class Comments extends Component {
                     user={this.props.user}
                     saveComment={this.saveComment}
                     parentId={null}
+                    onPressLogIn={this.props.onPressLogIn}
                 />
 
                 {/* Render comments */}
                 {this.renderComments(this.props.comments)}
 
                 {/* Render see more comments */}
-                <SeeMoreComments
-                    seeMoreReplies={false}
-                    fetchComments={() => this.props.fetchComments(this.props.commentPage + 1)}
-                    hasNextPage={this.props.commentsHasNextPage}
-                    page={this.props.commentPage}
-                    isFetching={this.props.isFetchingComments}
-                />
+                {!_.isEmpty(this.props.comments) &&
+                    <View>
+                        <SeeMoreComments
+                            seeMoreReplies={false}
+                            fetchComments={() => this.props.fetchComments(this.props.commentPage + 1)}
+                            hasNextPage={this.props.commentsHasNextPage}
+                            page={this.props.commentPage}
+                            isFetching={this.props.isFetchingComments}
+                        />
 
-                {/* Fetch comments loader */}
-                {this.props.isFetchingComments && this.props.commentPage === 1 &&
-                    <ActivityIndicator style={styles.seeMoreCommentsLoader} size="small" color={'#d3d3d3'} animating={true} />
+                        {/* Fetch comments loader */}
+                        {this.props.isFetchingComments && this.props.commentPage === 1 &&
+                            <ActivityIndicator style={styles.seeMoreCommentsLoader} size="small" color={'#d3d3d3'} animating={true} />
+                        }
+                    </View>
                 }
 
                 <View style={{ height: 50 }} />

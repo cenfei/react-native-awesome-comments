@@ -59,9 +59,8 @@ class Composer extends Component {
                         </View>
                     </View>
                 ) : <View>
-                        <View>
-                            {/* TODO: Add link */}
-                            <Text>Please login to post a comment</Text>
+                        <View style={{ paddingBottom: 5, flexDirection: 'row', alignSelf: 'center' }}>
+                            <Text>(Please</Text><TouchableOpacity onPress={this.props.onPressLogIn}><Text style={{ fontWeight: 'bold', color: '#ff5a60' }}> login </Text></TouchableOpacity><Text>to post a comment)</Text>
                         </View>
                     </View>
             )
