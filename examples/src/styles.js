@@ -58,7 +58,8 @@ module.exports = StyleSheet.create({
     commentCard: {
         flex: 1,
         flexDirection: 'row',
-        marginVertical: 5,
+        marginVertical: 0,
+        marginTop: 10,
         marginHorizontal: 10
     },
     optionPanel: {
@@ -87,7 +88,9 @@ module.exports = StyleSheet.create({
         paddingLeft: 77
     },
     seeMoreCommentsContainer: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginVertical: 0,
+        paddingVertical: 0
     },
     seeMoreCommentsLoader: {
         marginLeft: 10
@@ -96,10 +99,12 @@ module.exports = StyleSheet.create({
 
     showRepliesContainer: {
         flexDirection: 'row',
-        paddingLeft: 10
+        paddingLeft: 10,
+        marginVertical: 0
     },
     showRepliesButton: {
-        paddingLeft: 67
+        paddingLeft: 67,
+        marginBottom: 0
     },
     showRepliesLoader: {
         marginLeft: 10

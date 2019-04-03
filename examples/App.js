@@ -45,7 +45,7 @@ export default class App extends Component {
         'initial': [],
         '5c6e4ba530972c31b294c429': [
           {
-            childrenCount: 1,
+            childrenCount: 2,
             commentId: "5c8b6af797da8f43664235ac",
             createdAt: "2019-03-15T09:05:59.731Z",
             isParent: true,
@@ -76,7 +76,7 @@ export default class App extends Component {
           },
           {
 
-            childrenCount: 0,
+            childrenCount: 1,
             commentId: "5c8a08183e3c555ccb264d5f",
             createdAt: "2019-03-14T07:51:52.716Z",
             isParent: true,
@@ -158,6 +158,32 @@ export default class App extends Component {
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
             userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
             _id: "5c94ea5074395ce7198652fb"
+          },
+          {
+            commentId: "5c94ea5074395ce71986523b",
+            createdAt: "2019-03-22T13:59:44.070Z",
+            isParent: false,
+            jobId: "5c6e4ba530972c31b294c429",
+            message: "deleniti atque corrupti quos dolores ",
+            name: "Raptor",
+            parentId: "5c8b6af797da8f43664235ac",
+            profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
+            userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
+            _id: "5c94ea5074395ce71986523b"
+          }
+        ],
+        '5c8a08183e3c555ccb264d5f': [
+          {
+            commentId: "5c94ea50743952371986523b",
+            createdAt: "2019-03-22T13:59:44.070Z",
+            isParent: false,
+            jobId: "5c6e4ba530972c31b294c429",
+            message: "et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus",
+            name: "Raptor",
+            parentId: "5c8a08183e3c555ccb264d5f",
+            profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
+            userId: "829c26f6-f845-4d87-8ba5-c57aab91a84c",
+            _id: "5c94ea50743952371986523b"
           }
         ]
       },

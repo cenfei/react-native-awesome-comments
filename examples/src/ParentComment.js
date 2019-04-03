@@ -139,7 +139,7 @@ class ParentComment extends Component {
                 </View>
 
                 <Collapsible
-                    style={{ flex: 1 }}
+                    style={{ flex: 1, paddingTop: 5 }}
                     easing="easeOutCubic"
                     collapsed={this.state.collapse}
                 >
@@ -177,7 +177,6 @@ class ParentComment extends Component {
     render() {
         return (
             <View>
-
                 {/* Render Comment */}
                 {this.renderParentComment(this.props.comment)}
 
@@ -197,7 +196,6 @@ class ParentComment extends Component {
                         />
                     }
                 </View>
-
             </View>
         )
     }
