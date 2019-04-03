@@ -162,7 +162,7 @@ class CommentCard extends Component {
 
 
                                 {this.isValidComment(this.state.composerValue) && isEditing &&
-                                    <View>
+                                    <View style={{ alignSelf: 'flex-start' }}>
                                         <TouchableOpacity
                                             onPress={() => this.onSubmitEdit({ ...comment, message: this.state.composerValue })}
                                             style={styles.sendBtn}

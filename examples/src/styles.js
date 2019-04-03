@@ -41,8 +41,7 @@ module.exports = StyleSheet.create({
     },
     sendBtn: {
         justifyContent: 'center',
-        marginHorizontal: 5,
-        paddingHorizontal: 5
+        marginHorizontal: 5
     },
     sendImg: {
         width: 30,

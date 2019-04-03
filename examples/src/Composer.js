@@ -41,6 +41,8 @@ class Composer extends Component {
                                 value={this.state.composerValue}
                                 onChangeText={(value) => this.setState({ composerValue: value })}
                                 multiline
+                                autoFocus={this.props.parentId !== null}
+
                             />
                             {this.isValidComment() &&
                                 <TouchableOpacity
