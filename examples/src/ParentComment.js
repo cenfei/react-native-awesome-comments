@@ -124,7 +124,7 @@ class ParentComment extends Component {
                     {/* Show replies button */}
                     <View style={styles.showRepliesButton}>
                         <TouchableOpacity onPress={() => { this.toggleShowReplies(this.props.comment.commentId) }} >
-                            <Text>{
+                            <Text style={styles.commentOptionText}>{
                                 `${this.state.collapse ? 'Show' : 'Hide'} ${this.state.collapse ? this.props.comment.childrenCount : ''} ${this.props.comment.childrenCount === 1 ? 'Reply' : 'Replies'}`
                             }</Text>
                         </TouchableOpacity>
@@ -188,12 +188,11 @@ class ParentComment extends Component {
                 <View style={styles.replyCommentComposer}>
                     {this.state.isReplying &&
                         <Composer
-                            enabled={true}
+                            enabled={this.props.enabled}
                             user={this.props.loggedInUser}  // profile pic
                             saveComment={this.props.saveComment}
                             parentId={this.props.comment.commentId}
                             resetCollapsible={this.resetCollapsible}
-                            isReply={true}
                         />
                     }
                 </View>

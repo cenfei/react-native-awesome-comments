@@ -89,7 +89,6 @@ class Comments extends Component {
                     user={this.props.user}
                     saveComment={this.saveComment}
                     parentId={null}
-                    isReply={false} // REMOVE
                 />
 
                 {/* Render comments */}

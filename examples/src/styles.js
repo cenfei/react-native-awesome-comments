@@ -19,22 +19,30 @@ module.exports = StyleSheet.create({
         paddingHorizontal: 10,
         elevation: 2
     },
-    composerTextInput: {
+    textInputSection: {
+        backgroundColor: '#f2f2f2',
+        padding: 5,
+        borderRadius: 25,
+        borderWidth: 0.6,
+        borderColor: '#a5a5a5'
+    },
+    inputBox: {
+        flexDirection: "row",
+        paddingHorizontal: 13,
+        paddingVertical: 0,
+        marginVertical: 0,
         flex: 1,
-        backgroundColor: '#e5e5e5',
-        paddingTop: 5,
-        paddingBottom: 10,
-        paddingHorizontal: 18,
-        borderRadius: 18,
-        textAlign: 'left',
-        borderBottomLeftRadius: 22,
-        borderBottomRightRadius: 22,
-        borderBottomWidth: 5,
-        borderColor: '#fff'
+        color: '#474747'
+    },
+    commentName: {
+        fontWeight: 'bold',
+        paddingHorizontal: 13,
+        color: '#545454'
     },
     sendBtn: {
         justifyContent: 'center',
-        marginHorizontal: 5
+        marginHorizontal: 5,
+        paddingHorizontal: 5
     },
     sendImg: {
         width: 30,
@@ -53,25 +61,18 @@ module.exports = StyleSheet.create({
         marginVertical: 5,
         marginHorizontal: 10
     },
-    textSection: {
-        flex: 1,
-        backgroundColor: '#f0f0f0',
-        paddingVertical: 9,
-        paddingHorizontal: 18,
-        borderRadius: 25,
-        borderColor: '#a5a5a5'
-    },
-    commentName: {
-        marginRight: 10,
-        fontWeight: 'bold'
-    },
     optionPanel: {
         flexDirection: 'row',
-        paddingLeft: 12
+        paddingLeft: 12,
+        marginLeft: 5
     },
     commentOption: {
-        marginHorizontal: 5,
+        marginRight: 20,
         marginVertical: 2
+    },
+    commentOptionText: {
+        color: '#7c7c7c',
+        fontWeight: '400'
     },
     replyCommentComposer: {
         paddingLeft: 67

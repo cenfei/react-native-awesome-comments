@@ -44,7 +44,7 @@ class CommentCard extends Component {
             <TouchableOpacity
                 style={styles.commentOption}
                 onPress={() => this.props.onPressReply()}>
-                <Text>Reply</Text>
+                <Text style={styles.commentOptionText}>Reply</Text>
             </TouchableOpacity>)
     }
 
@@ -57,7 +57,7 @@ class CommentCard extends Component {
                     this.setState({ composerValue: this.props.comment.message })
                     this.commentTextInput.focus()
                 }}>
-                <Text>Edit</Text>
+                <Text style={styles.commentOptionText}>Edit</Text>
             </TouchableOpacity>)
     }
 
@@ -70,7 +70,7 @@ class CommentCard extends Component {
                         this.onPressCancelEdit();
                         this.setState({ composerValue: this.props.comment.message })
                     }}>
-                    <Text>Cancel</Text>
+                    <Text style={styles.commentOptionText}>Cancel</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -81,16 +81,14 @@ class CommentCard extends Component {
             <TouchableOpacity
                 style={styles.commentOption}
                 onPress={() => this.props.onPressDelete(comment)}>
-                <Text>Delete</Text>
+                <Text style={styles.commentOptionText}>Delete</Text>
             </TouchableOpacity>)
     }
 
     renderTimeStamp = (createdAt) => {
         return (
-            <TouchableOpacity
-                style={styles.commentOption}>
-                <Text>{moment(new Date(createdAt)).fromNow(true)}</Text>
-            </TouchableOpacity>)
+            <Text style={[styles.commentOption, { color: '#aaaaaa', fontWeight: '300' }]}>{moment(new Date(createdAt)).fromNow(true)}</Text>
+        )
     }
 
     renderParentOptionPanel = (comment) => {
@@ -142,16 +140,17 @@ class CommentCard extends Component {
 
                 <View style={{ flex: 1 }}>
                     <View style={styles.row}>
-                        <View style={[styles.textSection, { borderWidth: isEditing ? 0.6 : 0 }]}>
+                        <View style={[styles.textInputSection, { borderWidth: isEditing ? 0.6 : 0, flex: 1 }]}>
                             <TouchableOpacity onPress={() => this.props.onPressProfile(comment.userId)}>
                                 <Text style={styles.commentName}>
                                     {comment.name}
                                 </Text>
                             </TouchableOpacity>
 
-                            <View>
+                            <View style={[styles.row, { justifyContent: 'space-between' }]}>
+
                                 <TextInput
-                                    style={{ color: '#000', padding: 0 }}
+                                    style={styles.inputBox}
                                     editable={isEditing}
                                     ref={input => (this.commentTextInput = input)}
 
@@ -160,21 +159,22 @@ class CommentCard extends Component {
                                     onChangeText={(value) => this.setState({ composerValue: value })}
                                     multiline
                                 />
+
+
+                                {this.isValidComment(this.state.composerValue) && isEditing &&
+                                    <View>
+                                        <TouchableOpacity
+                                            onPress={() => this.onSubmitEdit({ ...comment, message: this.state.composerValue })}
+                                            style={styles.sendBtn}
+                                        >
+                                            <Image
+                                                source={Images.send}
+                                                style={styles.sendImg} />
+                                        </TouchableOpacity>
+                                    </View>
+                                }
                             </View>
                         </View>
-
-                        {this.isValidComment(this.state.composerValue) && isEditing &&
-                            <View>
-                                <TouchableOpacity
-                                    onPress={() => this.onSubmitEdit({ ...comment, message: this.state.composerValue })}
-                                    style={styles.sendBtn}
-                                >
-                                    <Image
-                                        source={Images.send}
-                                        style={styles.sendImg} />
-                                </TouchableOpacity>
-                            </View>
-                        }
                     </View>
 
                     {!isEditing && this.props.enabled && !_.isEmpty(this.props.loggedInUser) && (comment.isParent ? this.renderParentOptionPanel(comment) : this.renderChildOptionPanel(comment))}

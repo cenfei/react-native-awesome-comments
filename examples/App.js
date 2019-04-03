@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, View, TextInput, Alert } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 import * as _ from 'lodash';
 import moment from 'moment';
 
@@ -50,7 +50,7 @@ export default class App extends Component {
             createdAt: "2019-03-15T09:05:59.731Z",
             isParent: true,
             jobId: "5c6e4ba530972c31b294c429",
-            message: "Lorem ipsum dolor siti",
+            message: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem",
             name: "Raptor",
             parentId: null,
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
@@ -67,7 +67,7 @@ export default class App extends Component {
             createdAt: "2019-03-14T07:51:52.716Z",
             isParent: true,
             jobId: "5c6e4ba530972c31b294c429",
-            message: "tempor incididunt ut labore et",
+            message: "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis",
             name: "Raptor",
             parentId: null,
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
@@ -81,7 +81,7 @@ export default class App extends Component {
             createdAt: "2019-03-14T07:51:52.716Z",
             isParent: true,
             jobId: "5c6e4ba530972c31b294c429",
-            message: "tempor incididunt ut labore et",
+            message: "et quasi architecto beatae vitae dicta sunt explicabo",
             name: "Raptor",
             parentId: null,
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
@@ -95,7 +95,7 @@ export default class App extends Component {
             createdAt: "2019-03-14T07:51:52.716Z",
             isParent: true,
             jobId: "5c6e4ba530972c31b294c429",
-            message: "tempor incididunt ut  sdfgsdfg dsgds gsdgds gdsgsg gsdfg sdgdfgdggggggggglabore et",
+            message: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit",
             name: "Raptor",
             parentId: null,
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
@@ -109,7 +109,7 @@ export default class App extends Component {
             createdAt: "2019-03-14T07:51:52.716Z",
             isParent: true,
             jobId: "5c6e4ba530972c31b294c429",
-            message: "tempor incididunt ut labore et",
+            message: "sed quia non numquam",
             name: "Raptor",
             parentId: null,
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
@@ -122,7 +122,7 @@ export default class App extends Component {
             createdAt: "2019-03-11T07:51:50.153Z",
             isParent: true,
             jobId: "5c6e4ba530972c31b294c429",
-            message: "Ut enim ad minim veniam",
+            message: "Quis autem vel eum iure reprehenderit qui in",
             name: "Raptor",
             parentId: null,
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
@@ -135,7 +135,7 @@ export default class App extends Component {
             createdAt: "2019-02-11T07:51:50.153Z",
             isParent: true,
             jobId: "5c6e4ba530972c31b294c429",
-            message: "hehee enim ad minim hola",
+            message: "ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur",
             name: "Raptor",
             parentId: null,
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
@@ -152,7 +152,7 @@ export default class App extends Component {
             createdAt: "2019-03-22T13:59:44.070Z",
             isParent: false,
             jobId: "5c6e4ba530972c31b294c429",
-            message: "First reply",
+            message: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum",
             name: "Raptor",
             parentId: "5c8b6af797da8f43664235ac",
             profilePic: "https://s3-ap-southeast-1.amazonaws.com/onawadak-userfiles/public/1550171141570-shot-59-skullbeardgaming.png",
@@ -269,7 +269,7 @@ export default class App extends Component {
 
           //mapStateToProps
           user={this.state.user}
-          comments={this.state.comments['5c6e4ba530972c31b294c429']}
+          comments={[]}
           commentPage={this.state.commentPage}
           isFetchingComments={this.state.isFetchingComments}
           commentsHasNextPage={this.state.commentsHasNextPage}
@@ -296,24 +296,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-  },
-  textInputView: {
-    padding: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  textInput: {
-    flexGrow: 1,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#CCC',
-    padding: 10,
-    fontSize: 16,
-    marginRight: 10,
-    textAlignVertical: 'top'
-  },
-  textInputButton: {
-    flexShrink: 1,
   }
 });

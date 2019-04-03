@@ -36,7 +36,7 @@ class SeeMoreComments extends Component {
                         style={styles.seeMoreCommentsBtn}
                         onPress={this.props.fetchComments}
                         disabled={this.props.isFetching}>
-                        <Text>{`See more ${this.props.seeMoreReplies ? 'replies' : 'comments'}`}</Text>
+                        <Text style={styles.commentOptionText}>{`See more ${this.props.seeMoreReplies ? 'replies' : 'comments'}`}</Text>
                     </TouchableOpacity>
                 }
 

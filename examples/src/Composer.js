@@ -34,27 +34,29 @@ class Composer extends Component {
                 this.props.user !== null ? (
                     <View style={styles.composerContainer}>
                         <Image source={{ uri: this.props.user.profilePic }} style={styles.ProfilePicture} />
-                        <TextInput
-                            style={styles.composerTextInput}
-                            placeholder='Write a comment...'
-                            value={this.state.composerValue}
-                            onChangeText={(value) => this.setState({ composerValue: value })}
-                            multiline
-                        />
-                        {this.isValidComment() &&
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.props.saveComment(this.state.composerValue, this.props.parentId);
-                                    this.setState({ composerValue: '' });
-                                    if (this.props.isReply) { this.props.resetCollapsible() }
-                                }}
-                                style={styles.sendBtn}
-                            >
-                                <Image
-                                    source={Images.send}
-                                    style={styles.sendImg} />
-                            </TouchableOpacity>
-                        }
+                        <View style={[styles.textInputSection, styles.row, { justifyContent: "space-between", 'maxHeight': 65 }]}>
+                            <TextInput
+                                style={styles.inputBox}
+                                placeholder='Write a comment...'
+                                value={this.state.composerValue}
+                                onChangeText={(value) => this.setState({ composerValue: value })}
+                                multiline
+                            />
+                            {this.isValidComment() &&
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        this.props.saveComment(this.state.composerValue, this.props.parentId);
+                                        this.setState({ composerValue: '' });
+                                        if (this.props.parentId !== null) { this.props.resetCollapsible() }
+                                    }}
+                                    style={styles.sendBtn}
+                                >
+                                    <Image
+                                        source={Images.send}
+                                        style={styles.sendImg} />
+                                </TouchableOpacity>
+                            }
+                        </View>
                     </View>
                 ) : <View>
                         <View>
@@ -65,7 +67,7 @@ class Composer extends Component {
             )
         } else {
             return (
-                <Text>(Commenting is disabled)</Text>
+                <Text style={{ textAlign: 'center', paddingBottom: 5, paddingHorizontal: 10, fontWeight: 'bold' }}>(Commenting is disabled)</Text>
             )
         }
     }
