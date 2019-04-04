@@ -32,9 +32,7 @@ module.exports = StyleSheet.create({
         paddingVertical: 0,
         marginVertical: 0,
         flex: 1,
-        color: '#474747',
-
-        backgroundColor: 'grey'
+        color: '#474747'
     },
     commentName: {
         fontWeight: 'bold',
@@ -62,9 +60,7 @@ module.exports = StyleSheet.create({
         justifyContent: 'flex-start',
         marginVertical: 0,
         marginTop: 10,
-        marginHorizontal: 10,
-
-        backgroundColor: 'yellow'
+        marginHorizontal: 10
     },
     optionPanel: {
         flexDirection: 'row',
