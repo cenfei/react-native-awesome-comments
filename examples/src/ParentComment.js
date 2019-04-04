@@ -65,7 +65,15 @@ class ParentComment extends Component {
     }
 
     resetCollapsible = () => {
-        this.setState({ collapse: true }, () => this.setState({ collapse: false }))
+        let self = this
+        this.setState({ collapse: true },
+            () => {
+                setTimeout(() => {
+                    self.setState({ collapse: false })
+                }, 0)
+            }
+
+        )
     }
 
     renderParentComment = (comment) => {

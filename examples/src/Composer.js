@@ -34,7 +34,7 @@ class Composer extends Component {
                 this.props.user !== null ? (
                     <View style={styles.composerContainer}>
                         <Image source={{ uri: this.props.user.profilePic }} style={styles.ProfilePicture} />
-                        <View style={[styles.textInputSection, styles.row, { justifyContent: "space-between", 'maxHeight': 65 }]}>
+                        <View style={[styles.textInputSection, styles.row, { justifyContent: "space-between" }]}>
                             <TextInput
                                 style={styles.inputBox}
                                 placeholder='Write a comment...'
