@@ -3,10 +3,12 @@ import {
     Text,
     View,
     Alert,
+    ScrollView,
     TouchableOpacity,
     ActivityIndicator
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
+import Modal from "react-native-modal";
 
 import { Composer } from './Composer';
 import { SeeMoreComments } from './SeeMoreComments'
@@ -20,7 +22,8 @@ class ParentComment extends Component {
             collapse: true,
             isReplying: false,
             page: 1,
-            isFetchingReplies: false
+            isFetchingReplies: false,
+            isModalVisible: false
         };
     }
 
@@ -123,6 +126,41 @@ class ParentComment extends Component {
         )
     }
 
+    toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
+
+    renderRepliesModal = () => {
+        return (
+            this.props.comment.childrenCount > 0 &&
+            <View>
+                <TouchableOpacity
+                    style={{ marginLeft: 77 }}
+                    onPress={this.toggleModal}>
+                    <Text>Show replies</Text>
+                </TouchableOpacity>
+
+                <Modal
+                    isVisible={this.state.isModalVisible}
+                    onBackButtonPress={this.toggleModal}
+                    hasBackdrop={false}
+                    animationInTiming={400}
+                    style={{ margin: 0 }}
+                >
+                    <Text style={{ textAlign: 'center', padding: 15, backgroundColor: '#ffffff', fontWeight: '500', elevation: 2 }}>Replies</Text>
+
+                    <ScrollView
+                        style={{ flex: 1, backgroundColor: '#ffffff', paddingHorizontal: 10 }}
+                        keyboardShouldPersistTaps={'handled'}
+                    >
+                        {/* Render Replies */}
+                        {this.renderReplies(this.props.replies)}
+                    </ScrollView>
+
+                </Modal>
+
+            </View>
+        )
+    }
+
     renderRepliesCollapsible = () => {
         return (
             this.props.comment.childrenCount > 0 &&
@@ -189,10 +227,11 @@ class ParentComment extends Component {
                 {this.renderParentComment(this.props.comment)}
 
                 {/* Render replies collapsible */}
-                {this.renderRepliesCollapsible()}
+                {/* {this.renderRepliesCollapsible()} */}
+                {this.renderRepliesModal()}
 
                 {/* Render reply composer */}
-                <View style={styles.replyCommentComposer}>
+                <View style={{ paddingLeft: 67 }}>
                     {this.state.isReplying &&
                         <Composer
                             enabled={this.props.enabled}

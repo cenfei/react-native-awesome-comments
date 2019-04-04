@@ -75,9 +75,6 @@ module.exports = StyleSheet.create({
         color: '#7c7c7c',
         fontWeight: '400'
     },
-    replyCommentComposer: {
-        paddingLeft: 67
-    },
     replyComments: {
         flex: 1,
         paddingLeft: 67

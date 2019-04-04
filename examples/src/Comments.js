@@ -81,7 +81,10 @@ class Comments extends Component {
 
     render() {
         return (
-            <ScrollView style={[styles.container, this.props.style]} >
+            <ScrollView
+                style={[styles.container, this.props.style]}
+                keyboardShouldPersistTaps={'handled'}
+            >
                 {this.props.title && <Text style={styles.commentSectionTitle}>{this.props.title}</Text>}
 
                 {/* Render Composer */}
