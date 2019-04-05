@@ -22,7 +22,6 @@
   "dependencies": {
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
-    "react-native-collapsible": "^1.4.0",
     "react-native-modal": "9.0.0"
   },
   "peerDependency": {

@@ -4,14 +4,13 @@ import {
     View,
     Alert,
     Image,
-    TextInput,
     ScrollView,
     TouchableOpacity,
     ActivityIndicator
 } from 'react-native';
-import Collapsible from 'react-native-collapsible';
 import Modal from "react-native-modal";
 
+import Images from './images';
 import { Composer } from './Composer';
 import { SeeMoreComments } from './SeeMoreComments'
 import CommentCard from './CommentCard';
@@ -36,7 +35,6 @@ class ParentComment extends Component {
                 {
                     text: 'DELETE', onPress: () => {
                         this.props.deleteComment(comment);
-                        this.resetCollapsible()
                     }
                 },
                 {
@@ -68,18 +66,6 @@ class ParentComment extends Component {
         this.setState({ isReplying: true, isModalVisible: true });
     }
 
-    resetCollapsible = () => {
-        let self = this
-        this.setState({ collapse: true },
-            () => {
-                setTimeout(() => {
-                    self.setState({ collapse: false })
-                }, 0)
-            }
-
-        )
-    }
-
     renderParentComment = (comment) => {
         return (
             <CommentCard
@@ -88,15 +74,11 @@ class ParentComment extends Component {
                 loggedInUser={this.props.loggedInUser}    // USDERID
                 comment={this.props.comment}
 
-                saveComment={this.props.saveComment}
                 editComment={this.props.editComment}
 
                 onPressReply={this.onPressReply}
                 onPressDelete={this.onPressDelete}
                 onPressProfile={this.props.onPressProfile}
-
-                replyPage={comment.replyPage}
-                repliesHasNextPage={comment.repliesHasNextPage}
 
             />
         )
@@ -112,14 +94,11 @@ class ParentComment extends Component {
                         loggedInUser={this.props.loggedInUser}
                         comment={reply}
 
-                        saveComment={this.props.saveComment}
                         editComment={this.props.editComment}
 
                         onPressReply={this.onPressReply}
                         onPressDelete={this.onPressDelete}
                         onPressProfile={this.props.onPressProfile}
-
-                        resetCollapsible={this.resetCollapsible}
 
                     />
                 )
@@ -130,6 +109,10 @@ class ParentComment extends Component {
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
+
+    scrollReplyView = () => {
+        setTimeout(() => { this.replyViewScroll.scrollToEnd({ animated: true }) }, 1000)
+    }
 
     renderRepliesModal = () => {
 
@@ -150,37 +133,49 @@ class ParentComment extends Component {
                     isVisible={this.state.isModalVisible}
                     onBackButtonPress={() => { this.toggleModal(); this.setState({ isReplying: false }) }}
                     hasBackdrop={false}
-                    animationInTiming={400}
+                    animationInTiming={500}
                     style={{ margin: 0 }}
                 >
-                    <Text style={{ textAlign: 'center', padding: 15, backgroundColor: '#ffffff', fontWeight: '500', elevation: 2 }}>Replies</Text>
+                    <View style={{ padding: 15, backgroundColor: '#ffffff', elevation: 2, flexDirection: 'row' }}>
+                        <Text style={{ fontWeight: '500', flex: 1, height: 20 }}>Replies</Text>
+                        <TouchableOpacity
+                            onPress={() => { this.toggleModal() }}
+                            style={{ height: 20, paddingRight: 3 }}
+                        >
+                            <Image
+                                source={Images.cancel}
+                                style={{ width: 20, height: 20 }} />
+                        </TouchableOpacity>
+                    </View>
 
                     <ScrollView
                         style={{ flex: 1, backgroundColor: '#ffffff' }}
                         keyboardShouldPersistTaps={'handled'}
+                        ref={ref => this.replyViewScroll = ref}
                     >
 
-                        {/* Render parent comment */}
+                        {/* Render parent comment inside replies modal*/}
                         <CommentCard
                             key={parentComment.commentId}
                             enabled={this.props.enabled}
                             loggedInUser={null}    // USDERID
                             comment={parentComment}
 
-                            saveComment={this.props.saveComment}
-                            editComment={this.props.editComment}
-
-                            onPressReply={this.onPressReply}
-                            onPressDelete={this.onPressDelete}
                             onPressProfile={this.props.onPressProfile}
-
-                            replyPage={parentComment.replyPage}
-                            repliesHasNextPage={parentComment.repliesHasNextPage}
 
                         />
 
                         {/* Render Replies */}
                         <View style={{ paddingLeft: 50 }}>
+
+                            {/* Fetching replies initial loader */}
+                            {
+                                this.state.page === 1 && this.state.isFetchingReplies &&
+                                < View style={{ margin: 10 }}>
+                                    <ActivityIndicator size="large" color={'#d3d3d3'} animating={true} />
+                                </View>
+                            }
+
                             {this.renderReplies(this.props.replies)}
 
                             {/* Render see more replies */}
@@ -206,15 +201,15 @@ class ParentComment extends Component {
                     </ScrollView>
 
                     {/* Render reply composer */}
-                    <View style={{ maxHeight: 95, backgroundColor: '#fff', elevation: 10, paddingVertical: 8 }}>
+                    <View style={{ maxHeight: 100, backgroundColor: '#fff', elevation: 10, paddingVertical: 8 }}>
                         <Composer
                             enabled={this.props.enabled}
                             user={this.props.loggedInUser}
                             saveComment={this.props.saveComment}
                             parentId={parentComment.commentId}
-                            resetCollapsible={this.resetCollapsible}
                             onPressLogIn={this.props.onPressLogIn}
                             isReplying={this.state.isReplying}
+                            scrollReplyView={this.scrollReplyView}
                         />
                     </View>
                 </Modal>

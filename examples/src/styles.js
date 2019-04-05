@@ -23,7 +23,7 @@ module.exports = StyleSheet.create({
         paddingHorizontal: 13,
         paddingVertical: 0,
         marginVertical: 0,
-        color: '#474747',
+        color: '#000',
         minHeight: 40
     },
     textBox: {
@@ -32,12 +32,12 @@ module.exports = StyleSheet.create({
         paddingVertical: 0,
         marginVertical: 0,
         flex: 1,
-        color: '#474747'
+        color: '#000'
     },
     commentName: {
         fontWeight: 'bold',
         paddingHorizontal: 13,
-        color: '#545454'
+        color: '#000'
     },
     sendBtn: {
         marginHorizontal: 5,
@@ -103,8 +103,5 @@ module.exports = StyleSheet.create({
     showRepliesButton: {
         paddingLeft: 67,
         marginBottom: 0
-    },
-    showRepliesLoader: {
-        marginLeft: 10
     }
 })

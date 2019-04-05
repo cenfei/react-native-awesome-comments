@@ -33,7 +33,7 @@ class Composer extends Component {
             return (
                 this.props.user !== null ? (
                     <View style={{ minHeight: 40, flexDirection: 'row', marginHorizontal: 10 }}>
-                        <Image source={{ uri: this.props.user.profilePic }} style={styles.ProfilePicture} />
+                        <Image source={{ uri: this.props.user.profilePic }} style={[styles.ProfilePicture, { alignSelf: 'center' }]} />
                         <View style={[styles.textInputSection, styles.row, { justifyContent: "space-between" }]}>
                             <TextInput
                                 style={[styles.inputBox, { flex: 1 }]}
@@ -48,6 +48,7 @@ class Composer extends Component {
                                     onPress={() => {
                                         this.props.saveComment(this.state.composerValue, this.props.parentId);
                                         this.setState({ composerValue: '' });
+                                        if (this.props.parentId !== null) { this.props.scrollReplyView() }
                                     }}
                                     style={styles.sendBtn}
                                 >
