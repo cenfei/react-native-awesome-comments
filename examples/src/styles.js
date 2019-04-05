@@ -40,7 +40,8 @@ module.exports = StyleSheet.create({
         color: '#545454'
     },
     sendBtn: {
-        marginHorizontal: 5
+        marginHorizontal: 5,
+        alignSelf: 'center'
     },
     sendImg: {
         width: 30,
@@ -72,7 +73,7 @@ module.exports = StyleSheet.create({
     },
     commentOptionText: {
         color: '#7c7c7c',
-        fontWeight: '400'
+        fontWeight: '500'
     },
     replyComments: {
         flex: 1,
@@ -85,7 +86,8 @@ module.exports = StyleSheet.create({
     },
     seeMoreCommentsContainer: {
         flexDirection: 'row',
-        marginVertical: 0,
+        marginTop: 5,
+        marginBottom: 10,
         paddingVertical: 0
     },
     seeMoreCommentsLoader: {

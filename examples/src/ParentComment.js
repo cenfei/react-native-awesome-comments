@@ -132,14 +132,17 @@ class ParentComment extends Component {
     };
 
     renderRepliesModal = () => {
+
+        let parentComment = this.props.comment;
+
         return (
 
             <View>
-                {this.props.comment.childrenCount > 0 &&
+                {parentComment.childrenCount > 0 &&
                     <TouchableOpacity
                         style={{ marginLeft: 77 }}
                         onPress={this.toggleModal}>
-                        <Text>{`Show ${this.props.comment.childrenCount} ${this.props.comment.childrenCount === 1 ? 'Reply' : 'Replies'}`}</Text>
+                        <Text style={styles.commentOptionText}>{`Show ${parentComment.childrenCount} ${parentComment.childrenCount === 1 ? 'Reply' : 'Replies'}`}</Text>
                     </TouchableOpacity>
                 }
 
@@ -156,8 +159,50 @@ class ParentComment extends Component {
                         style={{ flex: 1, backgroundColor: '#ffffff' }}
                         keyboardShouldPersistTaps={'handled'}
                     >
+
+                        {/* Render parent comment */}
+                        <CommentCard
+                            key={parentComment.commentId}
+                            enabled={this.props.enabled}
+                            loggedInUser={null}    // USDERID
+                            comment={parentComment}
+
+                            saveComment={this.props.saveComment}
+                            editComment={this.props.editComment}
+
+                            onPressReply={this.onPressReply}
+                            onPressDelete={this.onPressDelete}
+                            onPressProfile={this.props.onPressProfile}
+
+                            replyPage={parentComment.replyPage}
+                            repliesHasNextPage={parentComment.repliesHasNextPage}
+
+                        />
+
                         {/* Render Replies */}
-                        {this.renderReplies(this.props.replies)}
+                        <View style={{ paddingLeft: 50 }}>
+                            {this.renderReplies(this.props.replies)}
+
+                            {/* Render see more replies */}
+                            <SeeMoreComments
+                                seeMoreReplies={true}
+                                fetchComments={() => {
+                                    let nextPage = this.state.page + 1
+                                    this.setState({ page: nextPage, isFetchingReplies: true })
+                                    this.props.fetchCommentReplies({
+                                        page: nextPage,
+                                        onSuccess: () => { this.setState({ isFetchingReplies: false }) },
+                                        onFail: () => { this.setState({ isFetchingReplies: false }) }
+                                    }
+                                    )
+                                }}
+                                page={this.state.page}
+                                hasNextPage={this.props.repliesHasNextPage}
+                                isFetching={this.state.isFetchingReplies}
+                                parentId={parentComment.commentId}
+                            />
+                        </View>
+
                     </ScrollView>
 
                     {/* Render reply composer */}
@@ -166,7 +211,7 @@ class ParentComment extends Component {
                             enabled={this.props.enabled}
                             user={this.props.loggedInUser}
                             saveComment={this.props.saveComment}
-                            parentId={this.props.comment.commentId}
+                            parentId={parentComment.commentId}
                             resetCollapsible={this.resetCollapsible}
                             onPressLogIn={this.props.onPressLogIn}
                             isReplying={this.state.isReplying}

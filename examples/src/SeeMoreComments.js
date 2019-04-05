@@ -9,15 +9,6 @@ import * as _ from 'lodash';
 
 import styles from "./styles";
 
-/*Props
-comments
-hasNextPage
-fetchComments()
-page
-isFetching
-parentId
-*/
-
 class SeeMoreComments extends Component {
     constructor(props) {
         super(props);
@@ -36,7 +27,7 @@ class SeeMoreComments extends Component {
                         style={styles.seeMoreCommentsBtn}
                         onPress={this.props.fetchComments}
                         disabled={this.props.isFetching}>
-                        <Text style={styles.commentOptionText}>{`See more ${this.props.seeMoreReplies ? 'replies' : 'comments'}`}</Text>
+                        <Text style={[styles.commentOptionText, { fontWeight: '500' }]}>{`See more ${this.props.seeMoreReplies ? 'replies' : 'comments'}`}</Text>
                     </TouchableOpacity>
                 }
 
