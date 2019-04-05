@@ -3,6 +3,8 @@ import {
     Text,
     View,
     Alert,
+    Image,
+    TextInput,
     ScrollView,
     TouchableOpacity,
     ActivityIndicator
@@ -148,77 +150,90 @@ class ParentComment extends Component {
                     <Text style={{ textAlign: 'center', padding: 15, backgroundColor: '#ffffff', fontWeight: '500', elevation: 2 }}>Replies</Text>
 
                     <ScrollView
-                        style={{ flex: 1, backgroundColor: '#ffffff', paddingHorizontal: 10 }}
+                        style={{ flex: 1, backgroundColor: '#ffffff' }}
                         keyboardShouldPersistTaps={'handled'}
                     >
                         {/* Render Replies */}
                         {this.renderReplies(this.props.replies)}
                     </ScrollView>
 
+                    {/* Render reply composer */}
+                    {this.state.isReplying = true &&
+                        <View style={{ maxHeight: 85, backgroundColor: 'red', elevation: 8 }}>
+                            <Composer
+                                enabled={this.props.enabled}
+                                user={this.props.loggedInUser}
+                                saveComment={this.props.saveComment}
+                                parentId={this.props.comment.commentId}
+                                resetCollapsible={this.resetCollapsible}
+                                onPressLogIn={this.props.onPressLogIn}
+                            />
+                        </View>
+                    }
                 </Modal>
 
             </View>
         )
     }
 
-    renderRepliesCollapsible = () => {
-        return (
-            this.props.comment.childrenCount > 0 &&
-            <View>
-                <View style={styles.showRepliesContainer}>
+    // renderRepliesCollapsible = () => {
+    //     return (
+    //         this.props.comment.childrenCount > 0 &&
+    //         <View>
+    //             <View style={styles.showRepliesContainer}>
 
-                    {/* Show replies button */}
-                    <View style={styles.showRepliesButton}>
-                        <TouchableOpacity onPress={() => { this.toggleShowReplies(this.props.comment.commentId) }} >
-                            <Text style={styles.commentOptionText}>{
-                                `${this.state.collapse ? 'Show' : 'Hide'} ${this.state.collapse ? this.props.comment.childrenCount : ''} ${this.props.comment.childrenCount === 1 ? 'Reply' : 'Replies'}`
-                            }</Text>
-                        </TouchableOpacity>
-                    </View>
+    //                 {/* Show replies button */}
+    //                 <View style={styles.showRepliesButton}>
+    //                     <TouchableOpacity onPress={() => { this.toggleShowReplies(this.props.comment.commentId) }} >
+    //                         <Text style={styles.commentOptionText}>{
+    //                             `${this.state.collapse ? 'Show' : 'Hide'} ${this.state.collapse ? this.props.comment.childrenCount : ''} ${this.props.comment.childrenCount === 1 ? 'Reply' : 'Replies'}`
+    //                         }</Text>
+    //                     </TouchableOpacity>
+    //                 </View>
 
-                    {/* Show replies loader */}
-                    {this.state.page === 1 && this.state.isFetchingReplies &&
-                        < View style={styles.showRepliesLoader}>
-                            <ActivityIndicator size="small" color={'#d3d3d3'} animating={true} />
-                        </View>
-                    }
-                </View>
+    //                 {/* Show replies loader */}
+    //                 {this.state.page === 1 && this.state.isFetchingReplies &&
+    //                     < View style={styles.showRepliesLoader}>
+    //                         <ActivityIndicator size="small" color={'#d3d3d3'} animating={true} />
+    //                     </View>
+    //                 }
+    //             </View>
 
-                <Collapsible
-                    style={{ flex: 1, paddingTop: 5 }}
-                    easing="easeOutCubic"
-                    collapsed={this.state.collapse}
-                >
-                    <View style={styles.replyComments}>
+    //             <Collapsible
+    //                 style={{ flex: 1, paddingTop: 5 }}
+    //                 easing="easeOutCubic"
+    //                 collapsed={this.state.collapse}
+    //             >
+    //                 <View style={styles.replyComments}>
 
-                        {/* Render Replies */}
-                        {this.renderReplies(this.props.replies)}
+    //                     {/* Render Replies */}
+    //                     {this.renderReplies(this.props.replies)}
 
-                        {/* Render see more replies */}
-                        <SeeMoreComments
-                            seeMoreReplies={true}
-                            fetchComments={() => {
-                                let nextPage = this.state.page + 1
-                                this.setState({ page: nextPage, isFetchingReplies: true })
-                                this.props.fetchCommentReplies({
-                                    page: nextPage,
-                                    onSuccess: () => { this.setState({ isFetchingReplies: false }) },
-                                    onFail: () => { this.setState({ isFetchingReplies: false }) }
-                                }
-                                )
-                            }}
-                            page={this.state.page}
-                            hasNextPage={this.props.repliesHasNextPage}
-                            isFetching={this.state.isFetchingReplies}
-                            parentId={this.props.comment.commentId}
-                        />
+    //                     {/* Render see more replies */}
+    //                     <SeeMoreComments
+    //                         seeMoreReplies={true}
+    //                         fetchComments={() => {
+    //                             let nextPage = this.state.page + 1
+    //                             this.setState({ page: nextPage, isFetchingReplies: true })
+    //                             this.props.fetchCommentReplies({
+    //                                 page: nextPage,
+    //                                 onSuccess: () => { this.setState({ isFetchingReplies: false }) },
+    //                                 onFail: () => { this.setState({ isFetchingReplies: false }) }
+    //                             }
+    //                             )
+    //                         }}
+    //                         page={this.state.page}
+    //                         hasNextPage={this.props.repliesHasNextPage}
+    //                         isFetching={this.state.isFetchingReplies}
+    //                         parentId={this.props.comment.commentId}
+    //                     />
 
-                    </View>
-                </Collapsible>
-            </View>
+    //                 </View>
+    //             </Collapsible>
+    //         </View>
 
-        )
-    }
+    //     )
+    // }
 
     render() {
         return (
@@ -227,22 +242,8 @@ class ParentComment extends Component {
                 {this.renderParentComment(this.props.comment)}
 
                 {/* Render replies collapsible */}
-                {/* {this.renderRepliesCollapsible()} */}
                 {this.renderRepliesModal()}
 
-                {/* Render reply composer */}
-                <View style={{ paddingLeft: 67 }}>
-                    {this.state.isReplying &&
-                        <Composer
-                            enabled={this.props.enabled}
-                            user={this.props.loggedInUser}  // profile pic
-                            saveComment={this.props.saveComment}
-                            parentId={this.props.comment.commentId}
-                            resetCollapsible={this.resetCollapsible}
-                            onPressLogIn={this.props.onPressLogIn}
-                        />
-                    }
-                </View>
             </View>
         )
     }

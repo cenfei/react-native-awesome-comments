@@ -32,11 +32,11 @@ class Composer extends Component {
         if (this.props.enabled) {
             return (
                 this.props.user !== null ? (
-                    <View style={styles.composerContainer}>
+                    <View style={{ minHeight: 40, flexDirection: 'row', marginHorizontal: 10 }}>
                         <Image source={{ uri: this.props.user.profilePic }} style={styles.ProfilePicture} />
                         <View style={[styles.textInputSection, styles.row, { justifyContent: "space-between" }]}>
                             <TextInput
-                                style={styles.inputBox}
+                                style={[styles.inputBox, { flex: 1 }]}
                                 placeholder='Write a comment...'
                                 value={this.state.composerValue}
                                 onChangeText={(value) => this.setState({ composerValue: value })}
@@ -75,9 +75,9 @@ class Composer extends Component {
 
     render() {
         return (
-            <View>
-                {this.renderComposer()}
-            </View>
+
+            this.renderComposer()
+
         )
     }
 }

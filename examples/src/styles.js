@@ -12,13 +12,6 @@ module.exports = StyleSheet.create({
         margin: 5,
         fontWeight: 'bold'
     },
-    composerContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        marginVertical: 5,
-        paddingHorizontal: 10,
-        elevation: 2
-    },
     textInputSection: {
         backgroundColor: '#f2f2f2',
         padding: 5,
@@ -27,6 +20,13 @@ module.exports = StyleSheet.create({
         borderColor: '#a5a5a5'
     },
     inputBox: {
+        paddingHorizontal: 13,
+        paddingVertical: 0,
+        marginVertical: 0,
+        color: '#474747',
+        minHeight: 40
+    },
+    textBox: {
         flexDirection: "row",
         paddingHorizontal: 13,
         paddingVertical: 0,
@@ -40,7 +40,6 @@ module.exports = StyleSheet.create({
         color: '#545454'
     },
     sendBtn: {
-        justifyContent: 'center',
         marginHorizontal: 5
     },
     sendImg: {

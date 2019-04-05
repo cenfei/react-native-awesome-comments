@@ -148,7 +148,7 @@ class CommentCard extends Component {
                             <View style={[styles.row, { justifyContent: 'space-between' }]}>
 
                                 <TextInput
-                                    style={styles.inputBox}
+                                    style={styles.textBox}
                                     editable={isEditing}
                                     ref={input => (this.commentTextInput = input)}
 
