@@ -41,15 +41,13 @@ class Composer extends Component {
                                 value={this.state.composerValue}
                                 onChangeText={(value) => this.setState({ composerValue: value })}
                                 multiline
-                                autoFocus={this.props.parentId !== null}
-
+                                autoFocus={this.props.isReplying}
                             />
                             {this.isValidComment() &&
                                 <TouchableOpacity
                                     onPress={() => {
                                         this.props.saveComment(this.state.composerValue, this.props.parentId);
                                         this.setState({ composerValue: '' });
-                                        if (this.props.parentId !== null) { this.props.resetCollapsible() }
                                     }}
                                     style={styles.sendBtn}
                                 >

@@ -95,6 +95,7 @@ class Comments extends Component {
                         saveComment={this.saveComment}
                         parentId={null}
                         onPressLogIn={this.props.onPressLogIn}
+                        isReplying={false}
                     />
                 </View>
 

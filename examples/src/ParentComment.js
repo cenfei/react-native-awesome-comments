@@ -139,7 +139,7 @@ class ParentComment extends Component {
                     <TouchableOpacity
                         style={{ marginLeft: 77 }}
                         onPress={this.toggleModal}>
-                        <Text>Show replies</Text>
+                        <Text>{`Show ${this.props.comment.childrenCount} ${this.props.comment.childrenCount === 1 ? 'Reply' : 'Replies'}`}</Text>
                     </TouchableOpacity>
                 }
 
@@ -161,18 +161,17 @@ class ParentComment extends Component {
                     </ScrollView>
 
                     {/* Render reply composer */}
-                    {this.state.isReplying &&
-                        <View style={{ maxHeight: 95, backgroundColor: '#fff', elevation: 10, paddingVertical: 8 }}>
-                            <Composer
-                                enabled={this.props.enabled}
-                                user={this.props.loggedInUser}
-                                saveComment={this.props.saveComment}
-                                parentId={this.props.comment.commentId}
-                                resetCollapsible={this.resetCollapsible}
-                                onPressLogIn={this.props.onPressLogIn}
-                            />
-                        </View>
-                    }
+                    <View style={{ maxHeight: 95, backgroundColor: '#fff', elevation: 10, paddingVertical: 8 }}>
+                        <Composer
+                            enabled={this.props.enabled}
+                            user={this.props.loggedInUser}
+                            saveComment={this.props.saveComment}
+                            parentId={this.props.comment.commentId}
+                            resetCollapsible={this.resetCollapsible}
+                            onPressLogIn={this.props.onPressLogIn}
+                            isReplying={this.state.isReplying}
+                        />
+                    </View>
                 </Modal>
 
             </View>
