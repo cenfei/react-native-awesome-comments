@@ -88,13 +88,15 @@ class Comments extends Component {
                 {this.props.title && <Text style={styles.commentSectionTitle}>{this.props.title}</Text>}
 
                 {/* Render Composer */}
-                <Composer
-                    enabled={this.props.enabled}
-                    user={this.props.user}
-                    saveComment={this.saveComment}
-                    parentId={null}
-                    onPressLogIn={this.props.onPressLogIn}
-                />
+                <View style={{ maxHeight: 85 }}>
+                    <Composer
+                        enabled={this.props.enabled}
+                        user={this.props.user}
+                        saveComment={this.saveComment}
+                        parentId={null}
+                        onPressLogIn={this.props.onPressLogIn}
+                    />
+                </View>
 
                 {/* Render comments */}
                 {this.renderComments(this.props.comments)}

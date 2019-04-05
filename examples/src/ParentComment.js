@@ -21,7 +21,6 @@ class ParentComment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            collapse: true,
             isReplying: false,
             page: 1,
             isFetchingReplies: false,
@@ -51,22 +50,22 @@ class ParentComment extends Component {
 
     }
 
-    toggleShowReplies = () => {
-        if (this.state.collapse) {
-            this.setState({ isFetchingReplies: true })
-            this.props.fetchCommentReplies({
-                page: 1,
-                onSuccess: () => this.setState({ isFetchingReplies: false }),
-                onFail: () => this.setState({ isFetchingReplies: false })
-            })
-        }
-        this.setState({
-            collapse: !this.state.collapse
-        });
-    }
+    // toggleShowReplies = () => {
+    //     if (this.state.collapse) {
+    //         this.setState({ isFetchingReplies: true })
+    //         this.props.fetchCommentReplies({
+    //             page: 1,
+    //             onSuccess: () => this.setState({ isFetchingReplies: false }),
+    //             onFail: () => this.setState({ isFetchingReplies: false })
+    //         })
+    //     }
+    //     this.setState({
+    //         collapse: !this.state.collapse
+    //     });
+    // }
 
     onPressReply = () => {
-        this.setState({ isReplying: true, collapse: false });
+        this.setState({ isReplying: true, isModalVisible: true });
     }
 
     resetCollapsible = () => {
@@ -128,21 +127,25 @@ class ParentComment extends Component {
         )
     }
 
-    toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
+    toggleModal = () => {
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    };
 
     renderRepliesModal = () => {
         return (
-            this.props.comment.childrenCount > 0 &&
+
             <View>
-                <TouchableOpacity
-                    style={{ marginLeft: 77 }}
-                    onPress={this.toggleModal}>
-                    <Text>Show replies</Text>
-                </TouchableOpacity>
+                {this.props.comment.childrenCount > 0 &&
+                    <TouchableOpacity
+                        style={{ marginLeft: 77 }}
+                        onPress={this.toggleModal}>
+                        <Text>Show replies</Text>
+                    </TouchableOpacity>
+                }
 
                 <Modal
                     isVisible={this.state.isModalVisible}
-                    onBackButtonPress={this.toggleModal}
+                    onBackButtonPress={() => { this.toggleModal(); this.setState({ isReplying: false }) }}
                     hasBackdrop={false}
                     animationInTiming={400}
                     style={{ margin: 0 }}
@@ -158,8 +161,8 @@ class ParentComment extends Component {
                     </ScrollView>
 
                     {/* Render reply composer */}
-                    {this.state.isReplying = true &&
-                        <View style={{ maxHeight: 85, backgroundColor: 'red', elevation: 8 }}>
+                    {this.state.isReplying &&
+                        <View style={{ maxHeight: 95, backgroundColor: '#fff', elevation: 10, paddingVertical: 8 }}>
                             <Composer
                                 enabled={this.props.enabled}
                                 user={this.props.loggedInUser}

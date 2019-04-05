@@ -37,7 +37,7 @@ class Composer extends Component {
                         <View style={[styles.textInputSection, styles.row, { justifyContent: "space-between" }]}>
                             <TextInput
                                 style={[styles.inputBox, { flex: 1 }]}
-                                placeholder='Write a comment...'
+                                placeholder={`Write a ${this.props.parentId !== null ? 'reply' : 'comment'}...`}
                                 value={this.state.composerValue}
                                 onChangeText={(value) => this.setState({ composerValue: value })}
                                 multiline
