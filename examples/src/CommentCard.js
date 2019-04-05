@@ -132,7 +132,8 @@ class CommentCard extends Component {
         return (
             <View key={comment.commentId} style={styles.commentCard}>
 
-                <TouchableOpacity onPress={() => this.props.onPressProfile(comment.userId)}>
+                <TouchableOpacity onPress={() => this.props.onPressProfile(comment.userId)}
+                    style={{ height: 40 }}>
                     <Image source={{ uri: comment.profilePic }} style={styles.ProfilePicture} />
                 </TouchableOpacity>
 

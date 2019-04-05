@@ -109,7 +109,7 @@ class ParentComment extends Component {
             <View>
                 {parentComment.childrenCount > 0 &&
                     <TouchableOpacity
-                        style={{ marginLeft: 77 }}
+                        style={{ marginLeft: 77, width: 130 }}
                         onPress={this.toggleModal}>
                         <Text style={styles.commentOptionText}>{`Show ${parentComment.childrenCount} ${parentComment.childrenCount === 1 ? 'Reply' : 'Replies'}`}</Text>
                     </TouchableOpacity>
